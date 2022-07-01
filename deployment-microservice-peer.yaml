@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer-service
+  namespace: default
+  labels:
+    app: peer-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: peer-service
+  template:
+    metadata:
+      labels:
+        app: peer-service
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "peer-service"
+        dapr.io/app-port: "80"
+        dapr.io/log-level: "debug"
+        dapr.io/sidecar-liveness-probe-period-seconds: "20"
+        dapr.io/sidecar-readiness-probe-period-seconds: "20"
+    spec:
+      containers:
+      - name: peer-service
+        image: siccardev.azurecr.io/peer-service:latest
+        env:
+        - name: PEER__NAME
+          value: "#{PEER__NAME}#"
+        - name: PEER__SEED
+          value: "#{PEER__SEED}#"
+        - name: PEER__IPENDPOINT
+          value: "#{PEER__IPENDPOINT}#"
+        - name: SERILOG__MINIMUMLEVEL
+          value: "#{SERILOG__MINIMUMLEVEL}#"
+        - name: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+          value: "true"
+        - name: APP__API__TOKEN
+          value: "#{APP__API__TOKEN}#"
+        - name: DaprSecret
+          value: "#{DaprSecret}#"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"          
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always

@@ -1,0 +1,19 @@
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: walletstore
+  labels:
+    app: wallet-service
+spec:
+  type: state.azure.cosmosdb
+  version: v1
+  metadata:
+  - name: url
+    value: "#{COSMOS_URL}#"   
+  - name: masterKey
+    value: "#{COSMOS_KEY}#"
+  - name: database
+    value: "#{COSMOS_DATABASE}#"
+  - name: collection
+    value: walletstate
