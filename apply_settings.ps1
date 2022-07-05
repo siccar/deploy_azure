@@ -6,7 +6,7 @@ param (
 )
 
 $acrName = $env:InstallationName + "cr"
-$issuer = https://$env:InstallationDNSName
+$issuer = "https://" + $env:InstallationDNSName
 Write-Host "Generating Deployment YAML for "$issuer
 
 # ActionService 
