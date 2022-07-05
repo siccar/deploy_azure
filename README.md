@@ -3,6 +3,13 @@
 The following procedure should help you get Siccar up and running in your own Azure Tenant.
 
 The installation configured is suitable for test and build purposes, further refinements can and should be made for a scalable deployment.
+
+This procedure should be run using a computer with the follwoing tooling
+
+* Microsoft .Net 6 Framework https://dotnet.microsoft.com/en-us/download
+* DAPR https://docs.dapr.io/getting-started/install-dapr-cli/
+* kubectl kubernetes tooling https://kubernetes.io/docs/tasks/tools/
+
 ## Steps
 
 Documentation and tooling to deploy a Siccar installation

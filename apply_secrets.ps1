@@ -12,4 +12,4 @@ $sharedJwt = dotnet siccarcmd init encode $sharedSecret;
 
 kubectl create secret generic app-api-token --from-literal=token=$sharedJwt -n default
 kubectl create secret generic daprsecret --from-literal=secret=$sharedSecret -n default
-kubectl apply -f .\components\secret-reader-role.yaml
+kubectl apply -f ./components/secret-reader-role.yaml

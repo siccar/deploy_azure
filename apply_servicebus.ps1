@@ -4,7 +4,7 @@ $serviceBusName = $env:InstallationName + "sb"
 
 Write-Host "Creating and attaching Service Bus :" $serviceBusName
 Write-Host " ...this might take a while"
-az servicebus namespace create --resource-group $env:ResourceGroup --name $serviceBusName --location $env:ResourceLocation
+$bin = az servicebus namespace create --resource-group $env:ResourceGroup --name $serviceBusName --location $env:ResourceLocation
 
 $connectStr = az servicebus namespace authorization-rule keys list --resource-group $env:ResourceGroup --namespace-name $serviceBusName `
   --name RootManageSharedAccessKey --query primaryConnectionString --output tsv
