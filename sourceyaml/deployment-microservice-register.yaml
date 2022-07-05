@@ -32,9 +32,12 @@ spec:
             name: app-api-token
         env:
         - name: REGISTERREPOSITORY__MONGODBSERVER
-          value: {{REGISTERREPOSITORY__MONGODBSERVER}}
+          valueFrom:
+            secretKeyRef:
+              name: registerrepository
+              key: repo
         - name: REGISTERREPOSITORY__DATABASENAME
-          value: {{REGISTERREPOSITORY__DATABASENAME}}
+          value: "RegisterService"
         - name: SERILOG__MINIMUMLEVEL
           value: {{SERILOG__MINIMUMLEVEL}}
         - name: TENANTISSUER

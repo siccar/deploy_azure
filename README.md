@@ -7,15 +7,23 @@ The installation configured is suitable for test and build purposes, further ref
 
 Documentation and tooling to deploy a Siccar installation
 
-within your choosen environment download this tool
+Within your choosen environment download this tool
 
      git clone https://github.com/siccar/deploy
 
-Manual Steps Required to Seup Up Azure Infrastructure
+Follow the steps to setup up the Azure Infrastructure
+
+### Step 0
+
+Get your stuff together:
+
+1. Decide and note the names for the installation i.e. n1siccardev
+2. Note its fully qualified DNS domain name i.e n1.siccar.dev
+3. Create your SSL Certificate and place the files in the ./components directory naming the files 'installationName'.crt and 'installationName'.key i.e. n1siccardev.crt  
 
 ### Step 1
 
-     Run the initialize powershell command, this will ask for some basic setup properties:
+Run the initialize powershell command, this will ask for the basic setup properties:
 
 * Installation Name i.e. n1siccardev
 * Installation DNS Name as is used with for SSL Certificate, which will be installed later
@@ -37,6 +45,7 @@ Specifically steps accomplished:
 * Created the services
 * Provided Dapr connectivity
 * Created a shared disk for persistent storage
+* Create and publishes an Azure Service Bus
 * Processed the source YAML for customized deployment
 
 ### Step 2
@@ -49,6 +58,10 @@ Now setup the Tenant-Service, we will use the MongoDB API for Cosmos and configu
      ./apply_tenant.ps1
 
 ### Step 3
+
+Its time to deploy the Wallet-Service
+
+     ./apply_wallet.ps1
 
 ### Step 4
 

@@ -37,9 +37,12 @@ spec:
         - name: ASPNETCORE_Kestrel__Certificates__Default__Path
           value: "default.pfx"
         - name: TENANTREPOSITORY__MONGODBSERVER
-          value: {{TENANTREPOSITORY__MONGODBSERVER}}
+          valueFrom:
+            secretKeyRef:
+              name: tenantrepository
+              key: repo
         - name: TENANTREPOSITORY__DATABASENAME
-          value: {{TENANTREPOSITORY__DATABASENAME}}
+          value: "TenantService"
         - name: TENANTISSUER
           value: {{TENANTISSUER}}
         - name: DEFAULTTENANT

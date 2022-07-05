@@ -4,10 +4,23 @@ metadata:
   name: blueprintstore
   namespace: default
 spec:
-  type: state.redis
+  type: state.azure.cosmosdb
   version: v1
   metadata:
-  - name: redisHost
-    value: redis:6379
-  - name: redisPassword
-    value: ""
+  - name: url
+    valueFrom:
+      secretKeyRef:
+      name: cosmosstate
+      key: url  
+  - name: masterKey
+    valueFrom:
+      secretKeyRef:
+      name: cosmosstate
+      key: masterkey  
+  - name: database
+    valueFrom:
+      secretKeyRef:
+      name: cosmosstate
+      key: database
+  - name: collection
+    value: blueprintstate

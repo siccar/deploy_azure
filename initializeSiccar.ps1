@@ -48,6 +48,9 @@ $bin = az aks update -n $InstallationName -g $ResourceGroup --attach-acr $RepoNa
 # Create and setup Shared Disk
 & .\apply_disk.ps1
 
+# Create and setup Service Bus
+& .\apply_servicebus.ps1
+
 # Create and setup Dapr Secrets
 & .\apply_secrets.ps1
 
