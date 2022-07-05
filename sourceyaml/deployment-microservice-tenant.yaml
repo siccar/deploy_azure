@@ -25,11 +25,11 @@ spec:
     spec:
       containers:
       - name: tenant-service
-        image: siccardev.azurecr.io/tenant-service:latest
+        image: {{ACR}}/tenant-service:latest
         imagePullPolicy: Always
         env:
         - name: SERILOG__MINIMUMLEVEL
-          value: "#{SERILOG__MINIMUMLEVEL}#"
+          value: {{SERILOG__MINIMUMLEVEL}}
         - name: ASPNETCORE_FORWARDEDHEADERS_ENABLED
           value: "true"
         - name: ASPNETCORE_Kestrel__Certificates__Default__Password
@@ -37,17 +37,23 @@ spec:
         - name: ASPNETCORE_Kestrel__Certificates__Default__Path
           value: "default.pfx"
         - name: TENANTREPOSITORY__MONGODBSERVER
-          value: "#{TENANTREPOSITORY__MONGODBSERVER}#"
+          value: {{TENANTREPOSITORY__MONGODBSERVER}}
         - name: TENANTREPOSITORY__DATABASENAME
-          value: "#{TENANTREPOSITORY__DATABASENAME}#"
+          value: {{TENANTREPOSITORY__DATABASENAME}}
         - name: TENANTISSUER
-          value: "#{TENANTISSUER}#"
+          value: {{TENANTISSUER}}
         - name: DEFAULTTENANT
-          value: "#{DefaultTenant}#"
+          value: {{DefaultTenant}}
         - name: APP__API__TOKEN
-          value: "#{APP__API__TOKEN}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: token
         - name: DaprSecret
-          value: "#{DaprSecret}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: secret
         resources:
           limits:
             memory: "256Mi"

@@ -2,41 +2,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: validator-service
+  name: blueprint-service
   namespace: default
   labels:
-    app: validator-service
+    app: blueprint-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: validator-service
+      app: blueprint-service
   template:
     metadata:
       labels:
-        app: validator-service
+        app: blueprint-service
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "validator-service"
+        dapr.io/app-id: "blueprint-service"
         dapr.io/app-port: "80"
         dapr.io/log-level: "debug"
         dapr.io/sidecar-liveness-probe-period-seconds: "20"
         dapr.io/sidecar-readiness-probe-period-seconds: "20"
     spec:
       containers:
-      - name: validator-service
-        image: siccardev.azurecr.io/validator-service:latest
+      - name: blueprint-service
+        image: {{ACR}}/blueprint-service:latest
         env:
         - name: SERILOG__MINIMUMLEVEL
-          value: "#{SERILOG__MINIMUMLEVEL}#"
+          value: {{SERILOG__MINIMUMLEVEL}}
+        - name: TENANTISSUER
+          value: {{TENANTISSUER}}
         - name: APP__API__TOKEN
-          value: "#{APP__API__TOKEN}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: token
         - name: DaprSecret
-          value: "#{DaprSecret}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: secret
         resources:
           limits:
             memory: "128Mi"
-            cpu: "500m"          
+            cpu: "250m"          
         ports:
         - containerPort: 80
         imagePullPolicy: Always

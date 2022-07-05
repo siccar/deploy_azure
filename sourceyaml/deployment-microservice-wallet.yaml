@@ -26,21 +26,27 @@ spec:
     spec:
       containers:
       - name: wallet-service
-        image: siccardev.azurecr.io/wallet-service:latest
+        image: {{ACR}}/wallet-service:latest
         envFrom:
         - secretRef:
             name: app-api-token
         env:
         - name: SERILOG__MINIMUMLEVEL
-          value: "#{SERILOG__MINIMUMLEVEL}#"
-        - name: APP__API__TOKEN
-          value: "#{APP__API__TOKEN}#"
+          value: {{SERILOG__MINIMUMLEVEL}}
         - name: TENANTISSUER
-          value: "#{TENANTISSUER}#"
+          value: {{TENANTISSUER}}
+        - name: APP__API__TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: token
         - name: DaprSecret
-          value: "#{DaprSecret}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: secret
         - name: ConnectionStrings__WalletDB__ConnectionString
-          value: "#{WalletDB_ConnectionString}#"
+          value: {{WalletDB_ConnectionString}}
         resources:
           limits:
             memory: "256Mi"

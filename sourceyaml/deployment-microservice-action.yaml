@@ -2,43 +2,50 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: blueprint-service
+  name: action-service
   namespace: default
   labels:
-    app: blueprint-service
+    app: action-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: blueprint-service
+      app: action-service
   template:
     metadata:
       labels:
-        app: blueprint-service
+        app: action-service
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "blueprint-service"
+        dapr.io/app-id: "action-service"
         dapr.io/app-port: "80"
         dapr.io/log-level: "debug"
+        dapr.io/app-token-secret: "app-api-token"
         dapr.io/sidecar-liveness-probe-period-seconds: "20"
         dapr.io/sidecar-readiness-probe-period-seconds: "20"
     spec:
       containers:
-      - name: blueprint-service
-        image: siccardev.azurecr.io/blueprint-service:latest
+      - name: action-service
+        image: {{ACR}}/action-service:latest
         env:
         - name: SERILOG__MINIMUMLEVEL
-          value: "#{SERILOG__MINIMUMLEVEL}#"
+          value: {{SERILOG__MINIMUMLEVEL}}
         - name: TENANTISSUER
-          value: "#{TENANTISSUER}#"
+          value: {{TENANTISSUER}}
         - name: APP__API__TOKEN
-          value: "#{APP__API__TOKEN}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: token
         - name: DaprSecret
-          value: "#{DaprSecret}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: secret
         resources:
           limits:
-            memory: "64Mi"
-            cpu: "250m"          
+            memory: "128Mi"
+            cpu: "500m"          
         ports:
         - containerPort: 80
         imagePullPolicy: Always

@@ -25,22 +25,28 @@ spec:
     spec:
       containers:
       - name: peer-service
-        image: siccardev.azurecr.io/peer-service:latest
+        image: {{ACR}}/peer-service:latest
         env:
         - name: PEER__NAME
-          value: "#{PEER__NAME}#"
+          value: {{PEER__NAME}}
         - name: PEER__SEED
-          value: "#{PEER__SEED}#"
+          value: {{PEER__SEED}}
         - name: PEER__IPENDPOINT
-          value: "#{PEER__IPENDPOINT}#"
+          value: {{PEER__IPENDPOINT}}
         - name: SERILOG__MINIMUMLEVEL
-          value: "#{SERILOG__MINIMUMLEVEL}#"
+          value: {{SERILOG__MINIMUMLEVEL}}
         - name: ASPNETCORE_FORWARDEDHEADERS_ENABLED
           value: "true"
         - name: APP__API__TOKEN
-          value: "#{APP__API__TOKEN}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: token
         - name: DaprSecret
-          value: "#{DaprSecret}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: secret
         resources:
           limits:
             memory: "128Mi"

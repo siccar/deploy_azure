@@ -1,5 +1,11 @@
 # Create and apply a share disk for DataProtection Key persistence
-
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory=$false)] [string] $InstallationName='node0',
+    [Parameter(Mandatory=$false)] [string] $ResourceGroup='node0',
+    [Parameter(Mandatory=$false)] [string] $serilog_level='Information'
+)
+Write-Host "Setting up Persistent Volume"
 $AKS_PERS_STORAGE_ACCOUNT_NAME = $env:InstallationName + "sa"
 $AKS_PERS_SHARE_NAME = $env:InstallationName + "disk"
 # Create a storage account
@@ -12,10 +18,16 @@ $AZURE_STORAGE_CONNECTION_STRING=$(az storage account show-connection-string -n 
 $bin = az storage share create -n $AKS_PERS_SHARE_NAME --connection-string $AZURE_STORAGE_CONNECTION_STRING
 $STORAGE_KEY=$(az storage account keys list --resource-group $env:ResourceGroup --account-name $AKS_PERS_STORAGE_ACCOUNT_NAME --query "[0].value" -o tsv)
 
-Write-Host "Store : " $AKS_PERS_STORAGE_ACCOUNT_NAME
-Write-Host "Key   : " $STORAGE_KEY
+Write-Host "Connecting Storage : " $AKS_PERS_STORAGE_ACCOUNT_NAME
 
-kubectl apply -f .\components\azure-file-pv.yaml
-kubectl apply -f .\components\azure-file-pvc.yaml
-kubectl apply -f .\components\azure-file-sc.yaml
+Copy-Item ./sourceyaml/azure-file-pv.yaml ./components/azure-file-pv.yaml
+Copy-Item ./sourceyaml/azure-file-pvc.yaml ./components/azure-file-pvc.yaml
+(Get-Content ./sourceyaml/azure-file-sc.yaml) | `
+    ForEach-Object { $_.replace("{{RESOURCEGROUP}}", " $env:ResourceGroup").
+        replace("{{STORAGEACCOUNT}}", "$AKS_PERS_STORAGE_ACCOUNT_NAME") `
+    } | `
+    Out-File ./components/azure-file-sc.yaml
 
+kubectl apply -f ./components/azure-file-pv.yaml
+kubectl apply -f ./components/azure-file-pvc.yaml
+kubectl apply -f ./components/azure-file-sc.yaml

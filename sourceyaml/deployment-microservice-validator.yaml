@@ -2,40 +2,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: action-service
+  name: validator-service
   namespace: default
   labels:
-    app: action-service
+    app: validator-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: action-service
+      app: validator-service
   template:
     metadata:
       labels:
-        app: action-service
+        app: validator-service
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "action-service"
+        dapr.io/app-id: "validator-service"
         dapr.io/app-port: "80"
         dapr.io/log-level: "debug"
-        dapr.io/app-token-secret: "app-api-token"
         dapr.io/sidecar-liveness-probe-period-seconds: "20"
         dapr.io/sidecar-readiness-probe-period-seconds: "20"
     spec:
       containers:
-      - name: action-service
-        image: siccardev.azurecr.io/action-service:latest
+      - name: validator-service
+        image: {{ACR}}/validator-service:latest
         env:
         - name: SERILOG__MINIMUMLEVEL
-          value: "#{SERILOG__MINIMUMLEVEL}#"
-        - name: TENANTISSUER
-          value: "#{TENANTISSUER}#"
+          value: {{SERILOG__MINIMUMLEVEL}}
         - name: APP__API__TOKEN
-          value: "#{APP__API__TOKEN}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: token
         - name: DaprSecret
-          value: "#{DaprSecret}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: secret
         resources:
           limits:
             memory: "128Mi"

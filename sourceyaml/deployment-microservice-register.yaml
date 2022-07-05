@@ -26,23 +26,29 @@ spec:
     spec:
       containers:
       - name: register-service
-        image: siccardev.azurecr.io/register-service:latest
+        image: {{ACR}}/register-service:latest
         envFrom:
         - secretRef:
             name: app-api-token
         env:
         - name: REGISTERREPOSITORY__MONGODBSERVER
-          value: "#{REGISTERREPOSITORY__MONGODBSERVER}#"
+          value: {{REGISTERREPOSITORY__MONGODBSERVER}}
         - name: REGISTERREPOSITORY__DATABASENAME
-          value: "#{REGISTERREPOSITORY__DATABASENAME}#"
+          value: {{REGISTERREPOSITORY__DATABASENAME}}
         - name: SERILOG__MINIMUMLEVEL
-          value: "#{SERILOG__MINIMUMLEVEL}#"
+          value: {{SERILOG__MINIMUMLEVEL}}
         - name: TENANTISSUER
-          value: "#{TENANTISSUER}#"
+          value: {{TENANTISSUER}}
         - name: APP__API__TOKEN
-          value: "#{APP__API__TOKEN}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: token
         - name: DaprSecret
-          value: "#{DaprSecret}#"
+          valueFrom:
+            secretKeyRef:
+              name: daprauth
+              key: secret
         resources:
           limits:
             memory: "256Mi"
