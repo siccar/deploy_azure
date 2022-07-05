@@ -21,4 +21,9 @@ kubectl delete secret daprsecret
 # Service bus takes a while so do it last
 $serviceBusName = $env:InstallationName + "sb"
 az servicebus namespace delete --resource-group $env:ResourceGroup --name $serviceBusName
+kubectl delete secret pubsubsecret
+
+# Remove Storage
+
+
 }

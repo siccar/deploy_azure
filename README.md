@@ -32,7 +32,7 @@ Run the initialize powershell command, this will ask for the basic setup propert
 
 You can now start with:
 
-     ./initializeSiccar.ps1
+     ./initializeSiccar.ps1 <resource_group> <installation_name> <domain_name> <location> <pat>
 
 This should have setup the basics and fetched the runtime images, we now need to setup the Tenant Service.
 
@@ -72,6 +72,7 @@ Configuring inbound access via ingress-nginx, with SSL
 ### Validate the Service
 
 To test the service is fully commisioned run the pingpong test.
+
 ## Troubleshooting
 
 Checking your environment variables; look for InstallationName, ResourceGroup, ResourceLocation
@@ -90,4 +91,3 @@ If AKS cannot pull images from the ACR
 Examine the state of DAPR, should open a Browser windows to localhost:8888
 
      dapr dashboard -k -p 8888
-
