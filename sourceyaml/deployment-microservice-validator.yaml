@@ -32,12 +32,12 @@ spec:
         - name: APP__API__TOKEN
           valueFrom:
             secretKeyRef:
-              name: daprauth
+              name: app-api-token
               key: token
         - name: DaprSecret
           valueFrom:
             secretKeyRef:
-              name: daprauth
+              name: daprsecret
               key: secret
         resources:
           limits:
