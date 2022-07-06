@@ -11,6 +11,12 @@ param (
 "Create and Initialize Azure Key Vault Secret"
 
 kubectl delete secret local-secret-store
+# Paramaters:
+#  KeyVault Connection String
+#  KeyVault Connection Id
+#  KeyVault Client Secret
+#  KeyVault Tenant Id
+#  Wallet Encryption Key
 
 kubectl create secret generic local-secret-store `
 --from-literal=keyVaultConnectionString=$KeyVaultConnection `
