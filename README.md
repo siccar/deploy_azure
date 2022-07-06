@@ -80,10 +80,11 @@ Start the services
 
 ### Step 5
 
-Now fixup the Tenant-Service, we will seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
+Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
 
 * Configure and Initialise database
 * Create and embed SSL certificate in Tenant/Identity Server
+
 
      ./apply_tenant.ps1
 

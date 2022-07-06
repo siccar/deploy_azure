@@ -1,8 +1,7 @@
 # Configure the Tenant Service 
+# SO this is still a work in progress
 
-
-kubectl apply -f ./deployments/deployment-microservice-tenant.yaml
-
+#
 Write-Host "We now need to configure the initial Tenant and Client"
 # Create the initial Tenant and set it in the yaml
 $initTenant ="{}"
@@ -31,4 +30,6 @@ try {
    Write-Error -Message 'An Error occured creating the sender wallet.'
  }
 
- #Then set the setting inthe YAML
+ #Then set the setting in the YAML
+
+ #Then Restart the Tenant Deployment

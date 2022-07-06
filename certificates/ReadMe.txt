@@ -33,3 +33,7 @@ Get the .crt
 From 
 
     openssl pkcs12 -export -out installationName.pfx -inkey installationName.key -in installationName.crt
+
+Viw pfx details
+
+    openssl pkcs12 -info -in certificate.pfx -nodes
