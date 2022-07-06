@@ -74,9 +74,10 @@ Configuring inbound access via ingress-nginx, with SSL
 
 ### Step 4
 
-Configuring inbound access via ingress-nginx, with SSL
+Start the services
 
-     ./apply_proxy.ps1
+     ./start_services.ps1
+
 ### Step 5
 
 Now fixup the Tenant-Service, we will seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
