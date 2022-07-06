@@ -22,7 +22,7 @@ The following Azure resources should be deployed in your choosen subscription an
 
 Once you have the ingress IP address from the AKS deployment you should add the appropriate DNS record
 
-Within your choosen deployment environment download this tool, we currently support Powershell environments on Windows / Mac / Linux but not currently Azure Cloud Shell.
+Within your choosen deployment environment download this tool, we currently support Powershell environments on Windows with Mac / Linux coming shortly but not currently Azure Cloud Shell until we can install DAPR tooling.
 
      git clone https://github.com/siccar/deploy
 
