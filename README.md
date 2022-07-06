@@ -85,6 +85,7 @@ Now fixup the Tenant-Service, we need to seed the Database with a default tenant
 * Configure and Initialise database
 * Create and embed SSL certificate in Tenant/Identity Server
 
+!! WARNING still in development
 
      ./apply_tenant.ps1
 

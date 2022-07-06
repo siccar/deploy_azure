@@ -13,11 +13,11 @@ try {
      -ContentType 'application/json; charset=utf-8' `
      -Body $initTenant 
  
-     Write-Output("Sender wallet created successfully.")
+     Write-Output("Tenant created successfully.")
  }
  catch [Microsoft.PowerShell.Commands.HttpResponseException] {
    if ($_.ErrorDetails -like "*400*") {
-     Write-Warning -Message 'Wallet already exists.'
+     Write-Warning -Message 'Tenant already exists.'
    }
    else {
      Write-Host $_
@@ -27,7 +27,7 @@ try {
  }
  catch {
    Write-Host $_
-   Write-Error -Message 'An Error occured creating the sender wallet.'
+   Write-Error -Message 'An Error occured creating the inital tanant.'
  }
 
  #Then set the setting in the YAML
