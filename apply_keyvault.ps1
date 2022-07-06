@@ -12,7 +12,7 @@ param (
 
 kubectl delete secret local-secret-store
 # Paramaters:
-#  KeyVault Connection String
+#  KeyVault Connection URL String
 #  KeyVault Connection Id
 #  KeyVault Client Secret
 #  KeyVault Tenant Id

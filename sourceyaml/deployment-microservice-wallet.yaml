@@ -46,7 +46,10 @@ spec:
               name: daprsecret
               key: secret
         - name: ConnectionStrings__WalletDB__ConnectionString
-          value: {{WalletDB_ConnectionString}}
+          valueFrom:
+            secretKeyRef:
+              name: walletrepository
+              key: repo
         resources:
           limits:
             memory: "256Mi"

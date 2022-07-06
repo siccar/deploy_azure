@@ -1,6 +1,7 @@
-# Create and store a DAPR authentication secret and bearer within your installation
+# Create and store a Kubernetes authentication secret and bearer within your installation
 # v1.0
 # 20220704 - happy 4th July
+#
 
 Write-Host "Creating and storing DAPR Authentication"
 # Start by creating a ransomised shared secret
@@ -14,8 +15,3 @@ kubectl create secret generic app-api-token --from-literal=token=$sharedJwt -n d
 kubectl create secret generic daprsecret --from-literal=secret=$sharedSecret -n default
 kubectl apply -f ./components/secret-reader-role.yaml
 
-$regRepo = "mongodb://n1siccardevmdb:bR1v2TcBnSK5tPkQ==@n1siccardevmdb.mongo.cosmos.azure.com:10255/?ssl=true" # get from Interface
-#kubectl create secret generic registerrepository --from-literal=repo=$regRepo -n default
-
-$walReop = "Server=n1siccardev.mysql.database.azure.com;UserID=siccaradmin;Password=####;Database=Wallets"
-#kubectl create secret generic walletrepository --from-literal=repo=$walRepo -n default

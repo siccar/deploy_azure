@@ -1,0 +1,92 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: siccar-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    nginx.ingress.kubernetes.io/proxy-buffers: "4 256k"
+    nginx.ingress.kubernetes.io/proxy-busy-buffers-size: "256k"
+    nginx.ingress.kubernetes.io/large-client-header-bufferss: "4 16k"
+spec:
+  tls:
+  - hosts:
+    - https://n1.siccar.dev
+    secretName: aks-ingress-tls
+  ingressClassName: nginx
+  rules:
+    - host:https://n1.siccar.dev
+      http:
+       paths:
+          - path: /api/actions
+            pathType: Exact 
+            backend:
+              service:
+                name: action-service
+                port:
+                  number: 80
+          - path: /actionshub
+            pathType: Exact
+            backend:
+              service:
+                name: action-service
+                port:
+                  number: 80
+          - path: /api/blueprints
+            pathType: Exact
+            backend:
+              service:
+                name: blueprint-service
+                port:
+                  number: 80
+          - path: /api/validator
+            pathType: Exact
+            backend:
+              service:
+                name: validator-service
+                port:
+                  number: 80
+          - path: /api/wallets
+            pathType: Exact  
+            backend:
+              service:
+                name: wallet-service
+                port:
+                  number: 80
+          - path: /api/registers
+            pathType: Exact 
+            backend:
+              service:
+                name: register-service
+                port:
+                  number: 80
+          - path: /odata/registers
+            pathType: Exact 
+            backend:
+              service:
+                name: register-service
+                port:
+                  number: 80
+          - path: /api/peer
+            pathType: Exact  
+            backend:
+              service:
+                name: peer-service
+                port:
+                  number: 80
+          - path: /peerhub
+            pathType: Exact
+            backend:
+              service:
+                name: peer-service
+                port:
+                  number: 80            
+          - path: /
+            pathType: Prefix  
+            backend:
+              service:
+                name: tenant-service
+                port:
+                  number: 80

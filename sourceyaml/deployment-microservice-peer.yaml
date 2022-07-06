@@ -28,13 +28,13 @@ spec:
         image: {{ACR}}/peer-service:latest
         env:
         - name: PEER__NAME
-          value: {{PEER__NAME}}
+          value: "{{PEER__NAME}}"
         - name: PEER__SEED
-          value: {{PEER__SEED}}
+          value: "{{PEER__SEED}}"
         - name: PEER__IPENDPOINT
-          value: {{PEER__IPENDPOINT}}
+          value: "{{PEER__IPENDPOINT}}"
         - name: SERILOG__MINIMUMLEVEL
-          value: {{SERILOG__MINIMUMLEVEL}}
+          value: "{{SERILOG__MINIMUMLEVEL}}"
         - name: ASPNETCORE_FORWARDEDHEADERS_ENABLED
           value: "true"
         - name: APP__API__TOKEN

@@ -46,7 +46,7 @@ spec:
         - name: TENANTISSUER
           value: {{TENANTISSUER}}
         - name: DEFAULTTENANT
-          value: {{DefaultTenant}}
+          value: "00000000-0000-0000-0000-000000000000"
         - name: APP__API__TOKEN
           valueFrom:
             secretKeyRef:

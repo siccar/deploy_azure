@@ -18,6 +18,8 @@ param (
 #Get-AzMySqlConnectionString -name $env:InstallationName -resourcegroupname $env:ResourceGroup -client ado.net
 
 # eg: Server=mysql-test.mysql.database.azure.com; Port=3306; Database={your_database}; Uid=mysql_test@mysql-test; Pwd={your_password};
-$walletConnection = ""
+$walletConnection = "Server=name.mysql.database.azure.com;Database={your_database};Uid=mysql_test@mysql-test;Pwd={your_password};"
 
-kubectl create secret generic registerrepository --from-literal=repo=$walletConnection -n default
+kubectl create secret generic walletrepository --from-literal=repo=$walletConnection -n default
+
+kubectl apply -f ./deployments/deployment-microservice-wallet.yaml

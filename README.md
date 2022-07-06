@@ -1,4 +1,4 @@
-# Siccar Installation Deployment
+# Siccar Installation Deployment for AZURE
 
 The following procedure should help you get Siccar up and running in your own Azure Tenant.
 
@@ -57,30 +57,50 @@ Specifically steps accomplished:
 
 ### Step 2
 
-Now setup the Tenant-Service, we will use the MongoDB API for Cosmos and configure the SSL Certificate for use with the STS
+Its time to deploy the Connection Strings as Kubernetes Secrets, you will be asked for the following information:
 
-* Configure and Initialise database
-* Create and embed SSL certificate in Tenant/Identity Server
+* MongoDB Connection String : Can be retrieved from the Azure Portal UI under the DB Settings > ConnectionStrings
+* MYSQL Connection String : Again retrieved from the Azure Portal
 
-     ./apply_tenant.ps1
+It can be applied on the command line or will prompt for the values
+
+     ./apply_connections.ps1
 
 ### Step 3
 
-Its time to deploy the Wallet-Service
+Configuring inbound access via ingress-nginx, with SSL
 
-     ./apply_wallet.ps1
+     ./apply_proxy.ps1
 
 ### Step 4
 
 Configuring inbound access via ingress-nginx, with SSL
 
      ./apply_proxy.ps1
+### Step 5
+
+Now fixup the Tenant-Service, we will seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
+
+* Configure and Initialise database
+* Create and embed SSL certificate in Tenant/Identity Server
+
+     ./apply_tenant.ps1
 
 ### Validate the Service
 
 To test the service is fully commisioned run the pingpong test.
 
-## Troubleshooting
+
+## Troubleshooting and other useful stuff
+
+kubectl is your friend
+
+     kubectl 
+          get pods 
+          describe pod <pod-instance-name>
+          logs -f <pod-instance-name>
+          exec –tty –stdin <deployment-name> -- /bin/bash
+          rollout restart deployment/<deployment-name>
 
 Checking your environment variables; look for InstallationName, ResourceGroup, ResourceLocation
 
@@ -98,3 +118,14 @@ If AKS cannot pull images from the ACR
 Examine the state of DAPR, should open a Browser windows to localhost:8888
 
      dapr dashboard -k -p 8888
+
+There might be limits on resources that cause failure in service start up e.g.
+
+     2022-07-06T16:11:46.1945068+00:00 [FTL][/TenantService/Microsoft.AspNetCore.Hosting.Diagnostics] 
+     Application startup exception MongoDB.Driver.MongoCommandException: 
+     Command insert failed: Error=2, 
+     Details='Response status code does not indicate success: BadRequest (400); Substatus: 1028; ActivityId: 44e636f4-c9f1-43e2-adc1-d000d63c9d72; 
+     Reason: (Message: {"Errors":["Your account is currently configured with a total throughput limit of 1000 RU\/s. This operation failed because 
+     it would have increased the total throughput to 1200 RU/s. See https://aka.ms/cosmos-tp-limit for more information."]} 
+     ActivityId: 44e636f4-c9f1-43e2-adc1-d000d63c9d72, Request URI: /apps/0f51e5f9-98a7-4588-b5eb-e03ac99a111d/services/b3eb2825-ea1b-4b94-8b0d-1abd16dee33e/partitions/4021a20b-4a4e-47f0-8095-046ffc988c35/replicas/133005852124662274p,
+     RequestStats: , SDK: Microsoft.Azure.Documents.Common/2.14.0, Microsoft.Azure.Cosmos.Tracing.TraceData.ClientSideRequestStatisticsTraceDatum, Windows/10.0.19041 cosmos-netstandard-sdk/3.18.0);.

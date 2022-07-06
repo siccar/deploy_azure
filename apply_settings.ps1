@@ -49,11 +49,17 @@ Write-Host "Generating Deployment YAML for "$issuer
     } | `
     Out-File ./deployments/deployment-microservice-tenant.yaml
 
-# PeerService 
+# PeerService  
+
+$ipAddressResource = az aks show -g $env:ResourceGroup -n $env:InstallationName --query networkProfile.loadBalancerProfile.effectiveOutboundIPs[].id -o tsv
+$ipaddress = az network public-ip show --ids $ipAddressResource --query ipAddress -o tsv
 (Get-Content ./sourceyaml/deployment-microservice-peer.yaml) | `
     ForEach-Object { $_.replace("{{ACR}}", "$acrName.azurecr.io").
         replace("{{SERILOG__MINIMUMLEVEL}}", "$serilog_level").
-        replace("{{TENANTISSUER}}", "$issuer")  `
+        replace("{{TENANTISSUER}}", "$issuer").
+        replace("{{PEER__IPENDPOINT}}","$ipaddress"). 
+        replace("{{PEER__SEED}}","https://n0.siccar.dev").
+        replace("{{PEER__NAME}}","$env:InstallationDNSName") `
     } | `
     Out-File ./deployments/deployment-microservice-peer.yaml
 
@@ -64,10 +70,4 @@ Write-Host "Generating Deployment YAML for "$issuer
         replace("{{TENANTISSUER}}", "$issuer")  `
     } | `
     Out-File ./deployments/deployment-microservice-validator.yaml
-
-
-
-
-
-
 
