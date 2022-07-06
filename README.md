@@ -2,7 +2,7 @@
 
 The following procedure should help you get Siccar up and running in your own Azure Tenant.
 
-The installation configured is suitable for test and build purposes, further refinements can and should be made for a scalable deployment.
+The installation configured is suitable for test and build purposes, further refinements can and should be made for a scalable and secure deployment.
 
 This procedure should be run using a computer with the follwoing tooling
 
@@ -12,9 +12,17 @@ This procedure should be run using a computer with the follwoing tooling
 
 ## Steps
 
-Documentation and tooling to deploy a Siccar installation
+Documentation and tooling to deploy a Siccar installation on Microsoft Azure.
 
-Within your choosen environment download this tool
+The following Azure resources should be deployed in your choosen subscription and data centre location.
+
+* Azure Kubernetes Service 
+* Cosmos API For MongoDB
+* Azure Database for MySQL
+
+Once you have the ingress IP address from the AKS deployment you should add the appropriate DNS record
+
+Within your choosen deployment environment download this tool, we currently support Powershell environments on Windows / Mac / Linux but not currently Azure Cloud Shell.
 
      git clone https://github.com/siccar/deploy
 
@@ -74,11 +82,23 @@ Configuring inbound access via ingress-nginx, with SSL
 
 ### Step 4
 
+Configure the Azure Key Vault for Wallet Protection, you require the following information
+
+* Azure Keyvault Connection String
+* Application ClientID
+* Application Secret
+* Infrastructure Tenant ID - the directory of the Managed Service Identity
+* An Encryption string for DB Protection : future removal
+
+     ./apply_keyvault.ps1
+
+### Step 5
+
 Start the services
 
      ./start_services.ps1
 
-### Step 5
+### Step 6
 
 Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
 

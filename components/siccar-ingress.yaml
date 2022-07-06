@@ -13,11 +13,11 @@ metadata:
 spec:
   tls:
   - hosts:
-    - https://n1.siccar.dev
+    - n1.siccar.dev
     secretName: aks-ingress-tls
   ingressClassName: nginx
   rules:
-    - host:https://n1.siccar.dev
+    - host:n1.siccar.dev
       http:
        paths:
           - path: /api/actions
