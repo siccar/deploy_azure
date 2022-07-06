@@ -35,6 +35,8 @@ az aks get-credentials --admin -n $InstallationName -g $ResourceGroup
 Write-Host "Checking / Installing DAPR"
 & dapr init -k
 
+$bin = az aks enable-addons -a monitoring -n $InstallationName -g $ResourceGroup
+
 Write-Host "Cloning Runtime Images"
 $RepoName = $InstallationName + "cr"
 $repoUser = "d202cc08-06a1-418f-9041-d7d201aff4a3"
