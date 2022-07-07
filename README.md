@@ -102,8 +102,8 @@ Start the services
 
 Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
 
+* Create and embed SSL certificate in Tenant/Identity Server - copy into persistent volume and update yaml paths
 * Configure and Initialise database
-* Create and embed SSL certificate in Tenant/Identity Server
 
 !! WARNING still in development
 
