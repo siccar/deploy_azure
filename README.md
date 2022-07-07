@@ -36,6 +36,11 @@ Get your stuff together:
 2. Note its fully qualified DNS domain name i.e n1.siccar.dev
 3. Create your SSL Certificate and place the files in the ./components directory naming the files 'installationName'.crt and 'installationName'.key i.e. n1siccardev.crt  
 
+Make sure you have logged into your Azure Command shell and correct subscription:
+
+     az login
+     az account set --subscription "mySubscriptionName"
+
 ### Step 1
 
 Run the initialize powershell command, this will ask for the basic setup properties:
