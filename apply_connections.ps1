@@ -3,7 +3,7 @@
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$true)] [string] $MongoDBConnectionString='mongodb://n1siccardevmdb:bR1v2TcBnSK5tPkQ==@n1siccardevmdb.mongo.cosmos.azure.com:10255/?ssl=true',
-    [Parameter(Mandatory=$true)] [string] $WalletRepositoryConnectionString='"Server=name.mysql.database.azure.com;Database={your_database};Uid=mysql_test@mysql-test;Pwd={your_password};"'
+    [Parameter(Mandatory=$true)] [string] $WalletRepositoryConnectionString='"Server=name.mysql.database.azure.com;Database={your_database};Uid=mysql_test@mysql-test;Pwd={your_password};Database=Wallets"'
 )
 
 Write-Host "Creating and storing Storage Connection Secrets"
