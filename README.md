@@ -39,7 +39,7 @@ Get your stuff together:
 Prepare your Active Directory
 
 1. Create an Application in AD to host the Siccar Server  ... AzurePortal > Active Directory > App Registrations > Add
-2. Set appropriate branding and properties 
+2. Set appropriate branding and properties
 3. Select the 'Authentication' tab
 4. Add a Single-Page platform and add the return URL to the chosen installation name as  https://{{dns_domain_name}}/signin-ad  
 5. Enable both checkboxes for Access Tokens and ID Tokens
@@ -99,13 +99,12 @@ Configuring inbound access via ingress-nginx, with SSL
 
 Configure the Azure Key Vault Service for Wallet Protection, first you must create the Azure KeyVault resource in your resource group and then create an actual valut instance within the service.
 
-
 #### Azure Keyvault Service
 
 Using the Web Azure Portal create a KeyVault Serive in you Resource Group and chosen location.
 
 #### Azure Keyvault Connection String
- 
+
  To create a keyvault instance use
 
      az keyvault key create --name MyKey --vault-name MyVault
@@ -142,6 +141,7 @@ Start the services
 ### Step 6
 
 At this point we should have a running, if not fully configured installation.
+
 ### Step 7
 
 Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
@@ -155,8 +155,13 @@ Now fixup the Tenant-Service, we need to seed the Database with a default tenant
 
 ### Validate the Service
 
-To test the service is fully commisioned run the pingpong test.
+There a number of quick checks you can perform to ensure the service is operationally up at this point:
 
+* Hit the https://{{dns_name}} and you should be retunred 'ok'
+* Hit https://{{dns_name}}}/.well-known/openid-configuration and you should get returned the Identity metadata, ensure the issuer names are corrent.
+* Hit https://{{dns_name}}}}/odata/registers/$metadata and you should be returned the Register Service OData definition
+
+ To test the service is fully commisioned run the pingpong test, this may require some initial configuration to grant the correct access roles to the user.
 
 ## Troubleshooting and other useful stuff
 
