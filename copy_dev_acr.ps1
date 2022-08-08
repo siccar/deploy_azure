@@ -17,6 +17,7 @@ az acr import `
   --image action-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
+  --force `
   --registry /subscriptions/63a27db5-9ba5-4d6b-b534-1f6b60b5c1ca/resourceGroups/siccarv3-dev/providers/Microsoft.ContainerRegistry/registries/siccardev
 "Imported Action-Service"
 
@@ -26,6 +27,7 @@ az acr import `
   --image blueprint-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
+  --force `
   --registry /subscriptions/63a27db5-9ba5-4d6b-b534-1f6b60b5c1ca/resourceGroups/siccarv3-dev/providers/Microsoft.ContainerRegistry/registries/siccardev
 "Imported Blueprint-Service"
 
@@ -35,6 +37,7 @@ az acr import `
   --source wallet-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
+  --force `
   --registry /subscriptions/63a27db5-9ba5-4d6b-b534-1f6b60b5c1ca/resourceGroups/siccarv3-dev/providers/Microsoft.ContainerRegistry/registries/siccardev
 "Imported Wallet-Service"
 
@@ -44,6 +47,7 @@ az acr import `
   --image register-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
+  --force `
   --registry /subscriptions/63a27db5-9ba5-4d6b-b534-1f6b60b5c1ca/resourceGroups/siccarv3-dev/providers/Microsoft.ContainerRegistry/registries/siccardev
  "Imported Register-Service"
 
@@ -53,6 +57,7 @@ az acr import `
   --image peer-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
+  --force `
   --registry /subscriptions/63a27db5-9ba5-4d6b-b534-1f6b60b5c1ca/resourceGroups/siccarv3-dev/providers/Microsoft.ContainerRegistry/registries/siccardev
 "Imported Peer-Service"
 
@@ -62,6 +67,7 @@ az acr import `
   --image validator-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
+  --force `
   --registry /subscriptions/63a27db5-9ba5-4d6b-b534-1f6b60b5c1ca/resourceGroups/siccarv3-dev/providers/Microsoft.ContainerRegistry/registries/siccardev
 "Imported Validator-Service"
 
@@ -71,5 +77,6 @@ az acr import `
   --image tenant-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
+  --force `
   --registry /subscriptions/63a27db5-9ba5-4d6b-b534-1f6b60b5c1ca/resourceGroups/siccarv3-dev/providers/Microsoft.ContainerRegistry/registries/siccardev
 "Imported Tenant-Service"

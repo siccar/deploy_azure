@@ -4,11 +4,21 @@ The following procedure should help you get Siccar up and running in your own Az
 
 The installation configured is suitable for test and build purposes, further refinements can and should be made for a scalable and secure deployment.
 
-This procedure should be run using a computer with the follwoing tooling
+This procedure should be run using a computer with the following tooling
 
 * Microsoft .Net 6 Framework https://dotnet.microsoft.com/en-us/download
+* Azure CLI https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli 
 * DAPR https://docs.dapr.io/getting-started/install-dapr-cli/
 * kubectl kubernetes tooling https://kubernetes.io/docs/tasks/tools/
+
+you should also add the following extentions to the Azure CLI
+
+     az feature register --namespace "Microsoft.ContainerService" --name "AKS-ExtensionManager"
+     az feature register --namespace "Microsoft.ContainerService" --name "AKS-Dapr"
+
+and lastly install or restore the siccarcmd dotnet tool (currently only windows)
+
+     dotnet tool install siccarcmd
 
 ## Steps
 
@@ -58,7 +68,7 @@ Run the initialize powershell command, this will ask for the basic setup propert
 * Installation Name i.e. n1siccardev
 * Installation DNS Name as is used with for SSL Certificate, which will be installed later
 * Resource Group to install into  i.e. n1siccardev
-* A PAT Token for access to the Deployment ACR i.e. hlaquoruwmp25rdfssldldvzn7nhousbnhhdltprvvobzwujts3q
+* A required PAT Token for access to the Deployment ACR is required i.e. hlaquoruwmp25rd...nhhdltprvvobzwujts3q this can be internally generated and time limted
 
 You can now start with:
 
@@ -162,6 +172,14 @@ There a number of quick checks you can perform to ensure the service is operatio
 * Hit https://{{dns_name}}}}/odata/registers/$metadata and you should be returned the Register Service OData definition
 
  To test the service is fully commisioned run the pingpong test, this may require some initial configuration to grant the correct access roles to the user.
+
+## Updating
+
+The release notes will detail any specific change in the services, there are a few common practices here:
+
+To update the installation ACR with the latest runtime images using the 'installer' id and time limited PAT token
+
+     .\copy_dev_acr.ps1 {{your_acr_name}} {{installed_id}} {{installer_PAT}}
 
 ## Troubleshooting and other useful stuff
 
