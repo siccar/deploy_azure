@@ -23,16 +23,20 @@ Write-Host "We now need to configure the initial Tenant and Client"
     Out-File ./components/tenant_boot.json
 
 $initTenant = Get-Content ./components/tenant_boot.json
+defaultTenant$ = "_"
 
 try {
-    Invoke-WebRequest $env:InstallationDNSName/api/Tenants `
+    $defaultTenant = (Invoke-WebRequest $env:InstallationDNSName/api/init `
      -ErrorVariable $walletError1 `
      -ErrorAction SilentlyContinue `
      -Method 'POST' `
      -ContentType 'application/json; charset=utf-8' `
-     -Body $initTenant 
- 
-     Write-Output("Tenant created successfully.")
+     -Body $initTenant `
+     | `
+     Select-Object -Property Content).Content
+    # need to extract the response content and use that as the 
+
+     Write-Output("Tenant created successfully. ID : $defaultTenant")
  }
  catch [Microsoft.PowerShell.Commands.HttpResponseException] {
    if ($_.ErrorDetails -like "*400*") {

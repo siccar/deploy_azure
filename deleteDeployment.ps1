@@ -1,4 +1,6 @@
 # Are you sure
+# !! actually just easier to delete the resource groups ...
+
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$true, HelpMessage="Must enter YES to delete deployment")] [string] $confim='no'
