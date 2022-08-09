@@ -7,5 +7,5 @@ param (
 
 
 "Create and Initialize MySQL Connection Secret"
-kubectl delete secret walletrespository --ignore-not-found
-kubectl create secret generic walletrepository --from-literal=token=$MySQLConnection -n default
+kubectl delete secret walletrepository --ignore-not-found
+kubectl create secret generic walletrepository --from-literal=repo=$MySQLConnection -n default

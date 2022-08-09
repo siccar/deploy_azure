@@ -49,7 +49,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: walletrepository
-              key: secret
+              key: repo
         resources:
           limits:
             memory: "256Mi"

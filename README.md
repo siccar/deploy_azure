@@ -155,6 +155,11 @@ Start the services
 
 At this point we should have a running, if not fully configured installation.
 
+* Check logs of services that dont start cleanly
+* the following kubernetes secrets should be in place (kubectl get secrets)
+** aks-ingress-tls
+** 
+
 ### Step 8
 
 Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
