@@ -10,5 +10,5 @@ mountOptions:
   - gid=0
 parameters:
   skuName: Standard_LRS
-  resourceGroup:  n1siccardev
-  storageAccount: n1siccardevsa
+  resourceGroup:  n2siccardev
+  storageAccount: n2siccardevsa
