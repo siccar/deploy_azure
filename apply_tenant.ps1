@@ -16,9 +16,9 @@ Write-Host "We now need to configure the initial Tenant and Client"
 # Az AD Tenant ID a2b9ca5b-54e5-437e-866e-bd48bfa6159a APPTENANTID
 
 (Get-Content ./sourceyaml/initial-clients.json) | `
-    ForEach-Object { $_.replace("{{APPCLIENTID}}", "$acrName.azurecr.io").
-        replace("{{APPTENANTID}}", "$serilog_level").
-        replace("{{EMAIL}}","$env:InstallationDNSName") `
+    ForEach-Object { $_.replace("{{APPCLIENTID}}", "$azadtenantid").
+        replace("{{APPTENANTID}}", "$azadclientid").
+        replace("{{EMAIL}}","$adminemail") `
     } | `
     Out-File ./components/tenant_boot.json
 
