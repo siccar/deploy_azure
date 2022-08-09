@@ -21,7 +21,7 @@ az keyvault set-policy -n $kvName --object-id $managesServiceId --key-permission
 
 az aks enable-addons --addons azure-keyvault-secrets-provider --name $kvName --resource-group $env:ResourceGroup
 
-kubectl delete secret local-secret-store
+kubectl delete secret local-secret-store --ignore-not-found
 # Paramaters:
 #  KeyVault Connection URL String - this is the 'kid' field when the actual Key Store is created in the Vault Service 
 #  KeyVault Connection Id String - the ID of the Application as was created in AD i.e. SiccarV3
@@ -30,7 +30,7 @@ kubectl delete secret local-secret-store
 #  Wallet Encryption Key - string - can be used to preseed cryptokeys for reliable testing
 
 kubectl create secret generic local-secret-store `
---from-literal=keyVaultConnectionString= $"https://{{$kvName}}.vault.azure.net" `
+--from-literal=keyVaultConnectionString= $KeyVaultConnection `
 --from-literal=siccarV3ClientId=$siccarV3ClientId `
 --from-literal=siccarV3ClientSecret=$siccarV3ClientSecret `
 --from-literal=siccarV3ClientTenant=$siccarV3ClientTenant `
