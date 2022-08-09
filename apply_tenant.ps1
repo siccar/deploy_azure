@@ -23,7 +23,7 @@ Write-Host "We now need to configure the initial Tenant and Client"
     Out-File ./components/tenant_boot.json
 
 $initTenant = Get-Content ./components/tenant_boot.json
-defaultTenant$ = "_"
+$defaultTenant = "_"
 
 try {
     $defaultTenant = (Invoke-WebRequest $env:InstallationDNSName/api/init `
