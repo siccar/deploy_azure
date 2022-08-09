@@ -45,7 +45,8 @@ Write-Host "Generating Deployment YAML for "$issuer
 (Get-Content ./sourceyaml/deployment-microservice-tenant.yaml) | `
     ForEach-Object { $_.replace("{{ACR}}", "$acrName.azurecr.io").
         replace("{{SERILOG__MINIMUMLEVEL}}", "$serilog_level").
-        replace("{{TENANTISSUER}}", "$issuer")  `
+        replace("{{TENANTISSUER}}", "$issuer").  `
+        replace("{{ISSUERNAME}}", "$issuer")  `
     } | `
     Out-File ./deployments/deployment-microservice-tenant.yaml
 

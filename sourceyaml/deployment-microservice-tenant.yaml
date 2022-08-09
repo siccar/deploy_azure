@@ -47,6 +47,8 @@ spec:
           value: {{TENANTISSUER}}
         - name: DEFAULTTENANT
           value: "{{DEFAULTTENANT}}"
+        - name: IdentityServer__IssuerName
+          value: "{{ISSUERNAME}}"
         - name: APP__API__TOKEN
           valueFrom:
             secretKeyRef:
