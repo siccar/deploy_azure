@@ -155,10 +155,18 @@ Start the services
 
 At this point we should have a running, if not fully configured installation.
 
-* Check logs of services that dont start cleanly
-* the following kubernetes secrets should be in place (kubectl get secrets)
-** aks-ingress-tls
-** 
+Check logs of services to ensure they start cleanly.
+
+The following kubernetes secrets should be in place (kubectl get secrets)
+
+* aks-ingress-tls : inbound ssl certificate
+* app-api-token : DAPR Authentication token
+* daprsecret : JWT Presentation of token
+* local-secret-store : contains settings for Wallet.Service to access Az Key Vault
+* pubsubsecret : Azure service bus connection
+* registeryrepository : connection string to mongo database
+* tenantrepository : connection string to tenant repository
+* walletrepository : connection string to wallet SQL repository
 
 ### Step 8
 
