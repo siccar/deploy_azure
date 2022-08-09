@@ -7,15 +7,18 @@ param (
 )
 
 Write-Host "Creating and storing Storage Connection Secrets"
-
+kubectl delete secret registerrepository --ignore-not-found
+kubectl delete secret tenantrepository --ignore-not-found
 kubectl create secret generic registerrepository --from-literal=repo=$MongoDBConnectionString -n default
 kubectl create secret generic tenantrepository --from-literal=repo=$MongoDBConnectionString -n default
 
 kubectl apply -f ./components/secret-wallet-kube.yaml
 $walRepo = "Server=n1siccardev.mysql.database.azure.com;UserID=siccaradmin;Password=####;Database=Wallets"
-kubectl create secret generic walletrepository --from-literal=repo=$walRepo -n default
+# we are now setting the walletrepository in apply_mysql; until we move to Cosmos SQL
+#kubectl create secret generic walletrepository --from-literal=repo=$walRepo -n default
 
 Write-Host "Storing SSL Certificate"
 $keyFile = $env:InstallationName + ".key"
 $crtFile = $env:InstallationName + ".crt"
+kubectl delete secret aks-ingress-tls --ignore-not-found
 kubectl create secret tls aks-ingress-tls --key ./certificates/$keyFile --cert ./certificates/$crtFile

@@ -26,7 +26,7 @@ Documentation and tooling to deploy a Siccar installation on Microsoft Azure.
 
 The following Azure resources should be deployed in your choosen subscription and data centre location.
 
-* Azure Kubernetes Service 
+* Azure Kubernetes Service - choose appropriate VM Sets/sizes
 * Cosmos API For MongoDB
 * Azure Database for MySQL
 
@@ -38,13 +38,13 @@ Within your choosen deployment environment download this tool, we currently supp
 
 Follow the steps to setup up the Azure Infrastructure
 
-### Step 0
+### Step 1
 
 Get your stuff together:
 
 1. Decide and note the names for the installation i.e. n1siccardev
 2. Note its fully qualified DNS domain name i.e n1.siccar.dev
-3. Create your SSL Certificate and place the files in the ./components directory naming the files 'installationName'.crt and 'installationName'.key i.e. n1siccardev.crt  
+3. Create your SSL Certificate and place the files in the ./certificates directory naming the files 'installationName'.crt and 'installationName'.key i.e. n1siccardev.crt  
 
 Prepare your Active Directory
 
@@ -61,7 +61,8 @@ Make sure you have logged into your Azure Command shell and correct subscription
      az login
      az account set --subscription "mySubscriptionName"
 
-### Step 1
+
+### Step 2
 
 Run the initialize powershell command, this will ask for the basic setup properties:
 
@@ -88,24 +89,26 @@ Specifically steps accomplished:
 * Create and publishes an Azure Service Bus
 * Processed the source YAML for customized deployment
 
-### Step 2
+### Step 3
 
 Its time to deploy the Connection Strings as Kubernetes Secrets, you will be asked for the following information:
 
 * MongoDB Connection String : Can be retrieved from the Azure Portal UI under the DB Settings > ConnectionStrings
 * MYSQL Connection String : Again retrieved from the Azure Portal
 
+!! Check your SSL Certificate is in the ./certificates directory
+
 It can be applied on the command line or will prompt for the values
 
      ./apply_connections.ps1
 
-### Step 3
+### Step 4
 
 Configuring inbound access via ingress-nginx, with SSL
 
      ./apply_proxy.ps1
 
-### Step 4
+### Step 5
 
 Configure the Azure Key Vault Service for Wallet Protection, first you must create the Azure KeyVault resource in your resource group and then create an actual valut instance within the service.
 
@@ -142,17 +145,17 @@ Applied as a connection string in the apply_connections.ps1 this is configured t
 
      kubectl create secret generic walletrepository --from-literal=repo="Server=srv.mysql.database.azure.com;UserID=user;Password=####;Database=Wallets" -n default
 
-### Step 5
+### Step 6
 
 Start the services
 
      ./start_services.ps1
 
-### Step 6
+### Step 7
 
 At this point we should have a running, if not fully configured installation.
 
-### Step 7
+### Step 8
 
 Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
 
