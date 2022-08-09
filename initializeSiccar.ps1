@@ -54,7 +54,7 @@ $bin = az aks update -n $InstallationName -g $ResourceGroup --attach-acr $RepoNa
 & .\apply_servicebus.ps1
 
 # Create and setup Dapr Secrets
-& .\apply_secrets.ps1
+& .\apply_dapr.ps1
 
 # Apply the common settings
 & .\apply_settings.ps1
