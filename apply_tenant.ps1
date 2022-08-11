@@ -18,7 +18,7 @@ Write-Host "We now need to configure the initial Tenant and Client"
 (Get-Content ./sourceyaml/initial-clients.json) | `
     ForEach-Object { $_.replace("{{APPCLIENTID}}", "$azadtenantid").
         replace("{{APPTENANTID}}", "$azadclientid").
-        replace("{{EMAIL}}","$adminemail") `
+        replace("{{EMAILID}}","$adminemail") `
     } | `
     Out-File ./components/tenant_boot.json
 
