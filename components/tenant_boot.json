@@ -1,0 +1,57 @@
+{
+    "tenants": [
+      {
+        "Name": "Siccar.Net",
+        "Authority": "https://login.microsoftonline.com/a2a14b76-fdf2-47ee-8ed5-f7abd39a3d15/",
+        "ClientId": "a2b9ca5b-54e5-437e-866e-bd48bfa6159a",
+        "CallbackPath": "/signin-ad",
+        "SignedOutCallbackPath": "/signout-callback-ad",
+        "RemoteSignOutPath": "/signout-ad",
+        "ResponseType": "id_token",
+        "TokenValidationParameters": {
+          "AuthenticationType":  "oidc",
+          "NameClaimType": "name",
+          "RoleClaimType": "role"
+        },
+        "Registers": [],
+        "AdminEmail": "{{EMAILID}}"
+      }
+    ],
+    "clients": [
+      {
+        "ClientId": "siccar-admin-ui-client",
+        "RequireClientSecret": false,
+        "AllowedGrantTypes": [
+          "authorization_code",
+          "client_credentials"
+        ],
+        "RedirectUris": [
+          "https://localhost:6004/authentication/login-callback",
+          "https://localhost:5101/authentication/login-callback",
+          "http://localhost:6004"
+        ],
+        "PostLogoutRedirectUris": [
+          "https://localhost:6004/signout-callback-oidc",
+          "https://localhost:5101/authentication/logout-callback"
+        ],
+        "AllowOfflineAccess": true,
+        "AllowedCorsOrigins": [
+          "https://localhost:6004",
+          "https://localhost:5101",
+          "http://localhost:6004"
+        ],
+        "AllowedScopes": [
+          "openid",
+          "profile",
+          "api",
+          "wallet.read",
+          "wallet.update",
+          "register.admin",
+          "blueprint.publish",
+          "wallet.admin",
+          "tenant.admin",
+          "installation.admin"
+        ]
+      }
+    ]
+  }
