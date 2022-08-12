@@ -2,7 +2,7 @@
     "tenants": [
       {
         "Name": "Siccar.Net",
-        "Authority": "https://login.microsoftonline.com/a2a14b76-fdf2-47ee-8ed5-f7abd39a3d15/",
+        "Authority": "https://login.microsoftonline.com/53cb40d8-edef-47b9-8836-f2162fcf3e62/",
         "ClientId": "a2b9ca5b-54e5-437e-866e-bd48bfa6159a",
         "CallbackPath": "/signin-ad",
         "SignedOutCallbackPath": "/signout-callback-ad",
@@ -14,7 +14,7 @@
           "RoleClaimType": "role"
         },
         "Registers": [],
-        "AdminEmail": "{{EMAILID}}"
+        "AdminEmail": "admin@siccar.dev"
       }
     ],
     "clients": [

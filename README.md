@@ -199,6 +199,11 @@ To update the installation ACR with the latest runtime images using the 'install
 
 ## Troubleshooting and other useful stuff
 
+the current images can be debug enabled by setting the following environment variable in the microservice deploymnet yaml.
+
+     - name: ASPNETCORE_ENVIRONMENT
+       value: "Development"
+
 kubectl is your friend
 
      kubectl 

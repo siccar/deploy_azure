@@ -13,7 +13,6 @@
           "NameClaimType": "name",
           "RoleClaimType": "role"
         },
-        "Registers": [],
         "AdminEmail": "{{EMAILID}}"
       }
     ],
