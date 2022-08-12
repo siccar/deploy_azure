@@ -50,7 +50,7 @@ try {
  }
  catch {
    Write-Host $_
-   Write-Error -Message 'An Error occured creating the inital tanant.'
+   Write-Error -Message 'An Error occured creating the inital tenant.'
  }
 
  #Then set the default tenant setting in the YAML
