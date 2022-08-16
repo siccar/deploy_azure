@@ -2,20 +2,25 @@
   
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory=$true)] [string] $KeyVaultConnection='https://kv.vault.azure.net',
+    [Parameter(Mandatory=$true)] [string] $siccarV3ClientTenant='clientTenant',
     [Parameter(Mandatory=$true)] [string] $siccarV3ClientId='clientId',
     [Parameter(Mandatory=$true)] [string] $siccarV3ClientSecret='clientSecret',
-    [Parameter(Mandatory=$true)] [string] $siccarV3ClientTenant='clientTenant',
+
     [Parameter(Mandatory=$true)] [string] $walletEncryptionKey= 'walletKey'
 )
 #https://contosokeyvault.vault.azure.net/keys/dataprotection/
+
+# should check the environment variables are set before proceeding
 
 "Create and Initialize Azure Key Vault Secret"
 $kvName = $env:InstallationName + "kv"
 az keyvault create --name $kvName --resource-group $env:ResourceGroup --location $env:ResourceLocation
 
-$vaultDetails = az keyvault key create --name SiccarV3EncryptionKey --vault-name $kvName
+$vaultResponse = az keyvault key create --name SiccarV3EncryptionKey --vault-name $kvName
 # what we want is the 'kid' from the returned 
+$vaultDetails = $vaultResponse | ConvertFrom-Json
+
+$kid = $vaultDetails.kid
 
 az keyvault set-policy -n $kvName --object-id $managesServiceId --key-permissions get unwrapKey wrapKey
 
@@ -30,7 +35,7 @@ kubectl delete secret local-secret-store --ignore-not-found
 #  Wallet Encryption Key - string - can be used to preseed cryptokeys for reliable testing
 
 kubectl create secret generic local-secret-store `
---from-literal=keyVaultConnectionString= $KeyVaultConnection `
+--from-literal=keyVaultConnectionString= $kid `
 --from-literal=siccarV3ClientId=$siccarV3ClientId `
 --from-literal=siccarV3ClientSecret=$siccarV3ClientSecret `
 --from-literal=siccarV3ClientTenant=$siccarV3ClientTenant `

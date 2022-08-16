@@ -6,6 +6,8 @@ Write-Host "Creating and attaching Service Bus :" $serviceBusName
 Write-Host " ...this might take a while"
 $bin = az servicebus namespace create --resource-group $env:ResourceGroup --name $serviceBusName --location $env:ResourceLocation
 
+# TODO Set Azure Service Bus policy to not Dead Letter based on HTTP Error
+
 $connectStr = az servicebus namespace authorization-rule keys list --resource-group $env:ResourceGroup --namespace-name $serviceBusName `
   --name RootManageSharedAccessKey --query primaryConnectionString --output tsv
 

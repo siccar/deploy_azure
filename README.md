@@ -276,11 +276,11 @@ extract private key data
 
     openssl rsa -in [installationName-encrypted.key] -out [keyfilename-decrypted.key]
 
-Get the .crt 
+Get the .crt
 
     openssl pkcs12 -in [installationName.pfx] -clcerts -nokeys -out [installationName.crt]
 
-From 
+From
 
     openssl pkcs12 -export -out installationName.pfx -inkey installationName.key -in installationName.crt
 
