@@ -4,9 +4,7 @@
 param (
     [Parameter(Mandatory=$true)] [string] $siccarV3ClientTenant='clientTenant',
     [Parameter(Mandatory=$true)] [string] $siccarV3ClientId='clientId',
-    [Parameter(Mandatory=$true)] [string] $siccarV3ClientSecret='clientSecret',
-
-    [Parameter(Mandatory=$true)] [string] $walletEncryptionKey= 'walletKey'
+    [Parameter(Mandatory=$true)] [string] $siccarV3ClientSecret='clientSecret'
 )
 #https://contosokeyvault.vault.azure.net/keys/dataprotection/
 
@@ -20,7 +18,8 @@ $vaultResponse = az keyvault key create --name SiccarV3EncryptionKey --vault-nam
 # what we want is the 'kid' from the returned 
 $vaultDetails = $vaultResponse | ConvertFrom-Json
 
-$kid = $vaultDetails.kid
+$kid = $vaultDetails.key.kid
+"kid URI : $kid"
 
 az keyvault set-policy -n $kvName --object-id $managesServiceId --key-permissions get unwrapKey wrapKey
 
@@ -38,5 +37,4 @@ kubectl create secret generic local-secret-store `
 --from-literal=keyVaultConnectionString= $kid `
 --from-literal=siccarV3ClientId=$siccarV3ClientId `
 --from-literal=siccarV3ClientSecret=$siccarV3ClientSecret `
---from-literal=siccarV3ClientTenant=$siccarV3ClientTenant `
---from-literal=walletEncryptionKey=$walletEncryptionKey
+--from-literal=siccarV3ClientTenant=$siccarV3ClientTenant 
