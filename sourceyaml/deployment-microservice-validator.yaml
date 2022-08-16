@@ -27,6 +27,9 @@ spec:
       containers:
       - name: validator-service
         image: {{ACR}}/validator-service:latest
+        envFrom:
+        - secretRef:
+            name: app-api-token
         env:
         - name: SERILOG__MINIMUMLEVEL
           value: {{SERILOG__MINIMUMLEVEL}}

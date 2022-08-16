@@ -27,6 +27,9 @@ spec:
       containers:
       - name: peer-service
         image: {{ACR}}/peer-service:latest
+        envFrom:
+        - secretRef:
+            name: app-api-token
         env:
         - name: PEER__NAME
           value: "{{PEER__NAME}}"
