@@ -37,4 +37,5 @@ kubectl create secret generic local-secret-store `
 --from-literal=keyVaultConnectionString= $kid `
 --from-literal=siccarV3ClientId=$siccarV3ClientId `
 --from-literal=siccarV3ClientSecret=$siccarV3ClientSecret `
---from-literal=siccarV3ClientTenant=$siccarV3ClientTenant 
+--from-literal=siccarV3ClientTenant=$siccarV3ClientTenant `
+--from-literal=walletEncryptionKey=in_key_vault
