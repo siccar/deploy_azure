@@ -34,7 +34,7 @@ kubectl delete secret local-secret-store --ignore-not-found
 #  Wallet Encryption Key - string - can be used to preseed cryptokeys for reliable testing
 
 kubectl create secret generic local-secret-store `
---from-literal=keyVaultConnectionString= $kid `
+--from-literal=keyVaultConnectionString=$kid `
 --from-literal=siccarV3ClientId=$siccarV3ClientId `
 --from-literal=siccarV3ClientSecret=$siccarV3ClientSecret `
 --from-literal=siccarV3ClientTenant=$siccarV3ClientTenant `
