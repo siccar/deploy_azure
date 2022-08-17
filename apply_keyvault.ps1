@@ -12,7 +12,7 @@ param (
 
 "Create and Initialize Azure Key Vault Secret"
 $kvName = $env:InstallationName + "kv"
-az keyvault create --name $kvName --resource-group $env:ResourceGroup --location $env:ResourceLocation
+$vaultCreateResponse = az keyvault create --name $kvName --resource-group $env:ResourceGroup --location $env:ResourceLocation
 
 $vaultResponse = az keyvault key create --name SiccarV3EncryptionKey --vault-name $kvName
 # what we want is the 'kid' from the returned 
@@ -21,7 +21,7 @@ $vaultDetails = $vaultResponse | ConvertFrom-Json
 $kid = $vaultDetails.key.kid
 "kid URI : $kid"
 
-az keyvault set-policy -n $kvName --object-id $managesServiceId --key-permissions get unwrapKey wrapKey
+az keyvault set-policy -n $kvName --object-id $siccarV3ClientId --key-permissions get unwrapKey wrapKey
 
 az aks enable-addons --addons azure-keyvault-secrets-provider --name $kvName --resource-group $env:ResourceGroup
 
