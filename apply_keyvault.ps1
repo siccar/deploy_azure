@@ -21,9 +21,9 @@ $vaultDetails = $vaultResponse | ConvertFrom-Json
 $kid = $vaultDetails.key.kid
 "kid URI : $kid"
 
-az keyvault set-policy -n $kvName --object-id $siccarV3ClientId --key-permissions get unwrapKey wrapKey
+$log = az keyvault set-policy -n $kvName --object-id $siccarV3ClientId --key-permissions get unwrapKey wrapKey
 
-az aks enable-addons --addons azure-keyvault-secrets-provider --name $kvName --resource-group $env:ResourceGroup
+$log = az aks enable-addons --addons azure-keyvault-secrets-provider --name $kvName --resource-group $env:ResourceGroup
 
 kubectl delete secret local-secret-store --ignore-not-found
 # Paramaters:

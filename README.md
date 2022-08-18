@@ -6,70 +6,93 @@ The installation configured is suitable for test and build purposes, further ref
 
 This procedure should be run using a computer with the following tooling
 
-* Microsoft .Net 6 Framework https://dotnet.microsoft.com/en-us/download
-* Azure CLI https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli 
-* DAPR https://docs.dapr.io/getting-started/install-dapr-cli/
-* kubectl kubernetes tooling https://kubernetes.io/docs/tasks/tools/
+* Microsoft .Net 6 Framework <https://dotnet.microsoft.com/en-us/download>
+* Powershell <https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell>
+* Azure CLI <https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli>
+* DAPR <https://docs.dapr.io/getting-started/install-dapr-cli/>
+* kubectl kubernetes tooling <https://kubernetes.io/docs/tasks/tools/>
 
 you should also add the following extentions to the Azure CLI
 
      az feature register --namespace "Microsoft.ContainerService" --name "AKS-ExtensionManager"
      az feature register --namespace "Microsoft.ContainerService" --name "AKS-Dapr"
 
-and lastly install or restore the siccarcmd dotnet tool (currently only windows)
+and lastly install or restore the siccarcmd dotnet tool
 
      dotnet tool install siccarcmd
+
+IMPORTANAT NOTES:
+
+* This is an early release some scripts can still be a bit brittle!
+* while the tooling runs across all platforms the DAPR installation tool cannot be used from Cloud Shell therefor do not perform the inistial installation from Cloud Shell
+* The scripts in part use environment variables for certain settings, these can be reset with ./set_installation.ps1
+* Try to complete the commisioning
 
 ## Steps
 
 Documentation and tooling to deploy a Siccar installation on Microsoft Azure.
 
-The following Azure resources should be deployed in your choosen subscription and data centre location.
-
-* Azure Kubernetes Service - choose appropriate VM Sets/sizes
-* Cosmos API For MongoDB
-* Azure Database for MySQL
-
-Once you have the ingress IP address from the AKS deployment you should add the appropriate DNS record
-
 Within your choosen deployment environment download this tool, we currently support Powershell environments on Windows with Mac / Linux coming shortly but not currently Azure Cloud Shell until we can install DAPR tooling.
-
-     git clone https://github.com/siccar/deploy
-
 Follow the steps to setup up the Azure Infrastructure
 
-### Step 1
+### Step 1 - Preparation
 
-Get your stuff together:
+1. Decide and note the names for the installation, could be a project or concatination of the node name
 
-1. Decide and note the names for the installation i.e. n1siccardev
-2. Note its fully qualified DNS domain name i.e n1.siccar.dev
-3. Create your SSL Certificate and place the files in the ./certificates directory naming the files 'installationName'.crt and 'installationName'.key i.e. n1siccardev.crt  
+* {{ResourceGroup}} i.e. n1siccardev
+* {{InstallationName}} i.e. n1siccardev
+* {{ResourceLocation}} i.e. uksouth
+* {{DNSName}} i.e. n1.siccar.dev
 
-Prepare your Active Directory
+2. Create a directory for the deployment configuration and clone the toolkit into it
 
-1. Create an Application in AD to host the Siccar Server  ... AzurePortal > Active Directory > App Registrations > Add
+     mkdir {{InstallationName}}
+     git clone <https://github.com/siccar/deploy> {{InstallationName}}
+     cd {{InstallationName}}
+
+
+3. Create your SSL Certificate and place the files in the ./certificates directory naming the files {{InstallationName}}.crt and {{InstallationName}}.key i.e. n1siccardev.crt  
+
+#### Prepare your Active Directory for the Siccar Installation
+
+We need to create two application entities in Active Directory, the first is an for the installation itself to gain access to infrastructure services. The second is for the front end administrative and user application authentication and its configuration will affect the user login processes.
+
+{{SiccarV3Tenant}} is the Azure Active Directory Tenant GUId i.e. a2b9ca...
+
+1. Create an Application in AD to host the Siccar Server  ... AzurePortal > Active Directory > App Registrations > Add ; Call the first infrastructure 'SiccarV3 and the second 'SiccarAdmin'
 2. Set appropriate branding and properties
 3. Select the 'Authentication' tab
-4. Add a Single-Page platform and add the return URL to the chosen installation name as  https://{{dns_domain_name}}/signin-ad  
-5. Enable both checkboxes for Access Tokens and ID Tokens
-6. Select the 'Certificates & Secrets' tab
-7. Create a new Client secret, giving it a suitable description, store the secret value string for use later in KeyVault setup.
+4. For the 'SiccarAdmin' Overview Client ID is GUID {{SiccarAppID}} i.e. 53cb40...
+4.1 Add a Single-Page platform and add the return URL to the chosen installation name as  'https://{{DNS_Name}}/signin-ad'  
+4.2 Enable both checkboxes for Access Tokens and ID Tokens
+5. For 'SiccarV3' GUID {{SiccarV3Id}}
+5.1 Select the 'Certificates & Secrets' tab
+5.2 Create a new Client secret, giving it a suitable description, store the secret value string for use later in KeyVault setup.
+
+The following Azure resources should be deployed in your choosen subscription and data centre location.
+Name of each of these should match the resource group and deployment name i.e. n1siccardev
+
+* A Resource group name {{InstallationName}}
+* Azure Kubernetes Service - choose appropriate VM Sets/sizes
+* Cosmos API For MongoDB
+* Azure Database for MySQL, ensure under networking that 'Allow public access from any Azure service' in Enabled
+
+The creation of the Azure Kubernetes service will also create a secondary resource group that contains the infrastructure and servers hosting the Kubernetes instance, its likely called MC_{{ResourceGroup}}_{{InstallationName}} _{{ResourceLocation}}. There you will find the IP Address 'kubernes-<id>', possibly the second in the list of the service which can now be added to your external DNS.
 
 Make sure you have logged into your Azure Command shell and correct subscription:
 
      az login
      az account set --subscription "mySubscriptionName"
 
-
-### Step 2
+### Step 2 - Installation
 
 Run the initialize powershell command, this will ask for the basic setup properties:
 
-* Installation Name i.e. n1siccardev
-* Installation DNS Name as is used with for SSL Certificate, which will be installed later
+* Resource Group {{ResourceGroup}} i.e. n1siccardev
+* Installation Name {{InstallationName}} i.e. n1siccardev
+* Installation DNS Name as is used with for SSL Certificate i.e. n1.siccar.dev
 * Resource Group to install into  i.e. n1siccardev
-* A required PAT Token for access to the Deployment ACR is required i.e. hlaquoruwmp25rd...nhhdltprvvobzwujts3q this can be internally generated and time limted
+* A required PAT Token for access to the Deployment ACR is required i.e. hlaquoruwmp25rd...nhhdltprvvobzwujts3q
 
 You can now start with:
 
@@ -89,14 +112,13 @@ Specifically steps accomplished:
 * Create and publishes an Azure Service Bus
 * Processed the source YAML for customized deployment
 
-### Step 3
+### Step 3 - Configuration
 
 Its time to deploy the Connection Strings as Kubernetes Secrets, you will be asked for the following information:
 
 * MongoDB Connection String : Can be retrieved from the Azure Portal UI under the DB Settings > ConnectionStrings
-* MYSQL Connection String : Again retrieved from the Azure Portal
 
-!! Check your SSL Certificate is in the ./certificates directory
+!! Check your SSL Certificate are in the ./certificates directory
 
 It can be applied on the command line or will prompt for the values
 
@@ -104,46 +126,44 @@ It can be applied on the command line or will prompt for the values
 
 ### Step 4
 
-Configuring inbound access via ingress-nginx, with SSL
+Configuring inbound access via ingress-nginx, with SSL. 
 
      ./apply_proxy.ps1
 
+!! If this script fails, it may be due to the ingress controller not having fully deployed. Its worth a retry after a few minutes.
 ### Step 5
 
-Configure the Azure Key Vault Service for Wallet Protection, first you must create the Azure KeyVault resource in your resource group and then create an actual valut instance within the service.
+Configure the Azure Key Vault Service for Wallet Protection, first you must run the script which will create the Key Vault  
 
 #### Azure Keyvault Service
 
-Using the Web Azure Portal create a KeyVault Serive in you Resource Group and chosen location.
-
-#### Azure Keyvault Connection String
-
- To create a keyvault instance use
-
-     az keyvault key create --name MyKey --vault-name MyVault
-
- The connection string is provided as the 'kid' in the output json from the command above.
-
- This URI is the path to created keyvault i.e. https://keyvault_name.vault.azure.net/_path_to_keyVault
-
- Further you may need to configure an access policy for the App identity to access to the keyvault
-
-     az keyvault set-policy -n MyVault --object-id <application_id> --key-permissions get unwrapKey wrapKey
-
-#### Authentication principal
-
-* Application ClientID, the guid of teh registered AD Application
-* Application Secret, the secret created in the app authentication setup stage
 * Infrastructure Tenant ID - the directory of the Managed Service Identity
-* An Encryption string for DB Protection : future removal
+* Application ClientID, the guid of teh registered AD Application
+* Application Secret, the secret created in the SiccarV3 app authentication setup stage
 
      ./apply_keyvault.ps1
 
+!! Currently you will now need to use the Azure Key Vault Web UI Settings > Access Policy to ensure that Application SiccarV3 has the following permissions
+
+* get Key
+* wrapKey
+* unWrapKey
+* get Secret
+* list Secret
+* set Secret
+
+Further ensure that Key Vault has enabled access to (Check boxes ticked)
+
+* Azure Virtual Machines for Deployment
+* Azure Disk Encryption for Volume encryption
+
 #### Ensure configuration of the MySQL store
 
-Applied as a connection string in the apply_connections.ps1 this is configured to use a stored kuberenetes secret for the actual connection string and the deployment-microservice-wallet.yaml references this secret. If it needs changed the updated the secret by deleteing and readding using kubectl i.e.
+Setting the wallet service SQL store  
 
-     kubectl create secret generic walletrepository --from-literal=repo="Server=srv.mysql.database.azure.com;UserID=user;Password=####;Database=Wallets" -n default
+     ./apply_mysql {{MYSQL_Connection}}
+
+
 
 ### Step 6
 
@@ -170,22 +190,34 @@ The following kubernetes secrets should be in place (kubectl get secrets)
 
 ### Step 8
 
-Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service
+Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service, you need to ensure teh DNS and routing is working - which it should be, test by hitting https://{{dns_name>}} and you should be returned 'ok'
 
 * Create and embed SSL certificate in Tenant/Identity Server - copy into persistent volume and update yaml paths
 * Configure and Initialise database
 
-!! WARNING still in development
+     ./apply_tenant.ps1 {{SiccarV3Tenant}} {{SiccarAppID}} {{admin_email}}
 
-     ./apply_tenant.ps1
+!! If the apply_tenant fails, then you may need to reset the deployment yaml file (deployments/deploy-microservice-tenant.yaml), or get the ID from the MongoDB Document to set the default tenant. 
+As long as the Tenant exists and Service has the environment variable DEFAULTTENANT then the service should start fine.
+
+At this point you should be able to sign in using, which will now require the ~/.siccar/appsettings.json to be edited
+
+     {
+          /* Siccar Configuration */
+          "SiccarService": "https://demo.siccar.dev/"  
+     }
+
+You can then login:
+
+     dotnet siccarcmd auth login
 
 ### Validate the Service
 
 There a number of quick checks you can perform to ensure the service is operationally up at this point:
 
-* Hit the https://{{dns_name}} and you should be retunred 'ok'
-* Hit https://{{dns_name}}}/.well-known/openid-configuration and you should get returned the Identity metadata, ensure the issuer names are corrent.
-* Hit https://{{dns_name}}}}/odata/registers/$metadata and you should be returned the Register Service OData definition
+* Hit the https://{{dns_name>}} and you should be returned 'ok'
+* Hit <https://{{dns_name}}}/.well-known/openid-configuration> and you should get returned the Identity metadata, ensure the issuer names are corrent.
+* Hit <https://{{dns_name}}}}/odata/registers/$metadata> and you should be returned the Register Service OData definition
 
  To test the service is fully commisioned run the pingpong test, this may require some initial configuration to grant the correct access roles to the user.
 
@@ -262,7 +294,6 @@ place the following files in this directory named as follows:
      <installationName>.key
 
      <installationName>.pfx
-
 
 OpenSSL Commands:
 
