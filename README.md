@@ -24,15 +24,14 @@ and lastly install or restore the siccarcmd dotnet tool
 IMPORTANAT NOTES:
 
 * This is an early release some scripts can still be a bit brittle!
-* while the tooling runs across all platforms the DAPR installation tool cannot be used from Cloud Shell therefor do not perform the inistial installation from Cloud Shell
+* while the tooling runs across all platforms the DAPR installation tool cannot be used from Cloud Shell therefore do not perform the installation from Cloud Shell
 * The scripts in part use environment variables for certain settings, these can be reset with ./set_installation.ps1
-* Try to complete the commisioning
+* Try to complete the commisioning in a single shell environment
 
 ## Steps
 
 Documentation and tooling to deploy a Siccar installation on Microsoft Azure.
 
-Within your choosen deployment environment download this tool, we currently support Powershell environments on Windows with Mac / Linux coming shortly but not currently Azure Cloud Shell until we can install DAPR tooling.
 Follow the steps to setup up the Azure Infrastructure
 
 ### Step 1 - Preparation
@@ -126,11 +125,12 @@ It can be applied on the command line or will prompt for the values
 
 ### Step 4
 
-Configuring inbound access via ingress-nginx, with SSL. 
+Configuring inbound access via ingress-nginx, with SSL.
 
      ./apply_proxy.ps1
 
 !! If this script fails, it may be due to the ingress controller not having fully deployed. Its worth a retry after a few minutes.
+
 ### Step 5
 
 Configure the Azure Key Vault Service for Wallet Protection, first you must run the script which will create the Key Vault  
@@ -159,11 +159,14 @@ Further ensure that Key Vault has enabled access to (Check boxes ticked)
 
 #### Ensure configuration of the MySQL store
 
-Setting the wallet service SQL store  
+Setting the wallet service SQL store. Get the connection string from the Azure portal but is in the form:
+
+Server="{{InstallationName}}.mysql.database.azure.com";UserID="siccaradmin";Password="{{MYSQL_PASSWORD}}";Database="wallets";
+
+The Databasename is important!
+
 
      ./apply_mysql {{MYSQL_Connection}}
-
-
 
 ### Step 6
 
@@ -190,14 +193,15 @@ The following kubernetes secrets should be in place (kubectl get secrets)
 
 ### Step 8
 
-Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service, you need to ensure teh DNS and routing is working - which it should be, test by hitting https://{{dns_name>}} and you should be returned 'ok'
+Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service, you need to ensure teh DNS and routing is working - which it should be, test by hitting <https://{{dns_name}}> and you should be returned 'ok'
 
 * Create and embed SSL certificate in Tenant/Identity Server - copy into persistent volume and update yaml paths
 * Configure and Initialise database
 
      ./apply_tenant.ps1 {{SiccarV3Tenant}} {{SiccarAppID}} {{admin_email}}
 
-!! If the apply_tenant fails, then you may need to reset the deployment yaml file (deployments/deploy-microservice-tenant.yaml), or get the ID from the MongoDB Document to set the default tenant. 
+!! If the apply_tenant fails, then you may need to reset the deployment yaml file (deployments/deploy-microservice-tenant.yaml), or get the ID from the MongoDB Document to set the default tenant.
+
 As long as the Tenant exists and Service has the environment variable DEFAULTTENANT then the service should start fine.
 
 At this point you should be able to sign in using, which will now require the ~/.siccar/appsettings.json to be edited
@@ -215,7 +219,7 @@ You can then login:
 
 There a number of quick checks you can perform to ensure the service is operationally up at this point:
 
-* Hit the https://{{dns_name>}} and you should be returned 'ok'
+* Hit <https://{{dns_name}}> and you should be returned 'ok'
 * Hit <https://{{dns_name}}}/.well-known/openid-configuration> and you should get returned the Identity metadata, ensure the issuer names are corrent.
 * Hit <https://{{dns_name}}}}/odata/registers/$metadata> and you should be returned the Register Service OData definition
 
