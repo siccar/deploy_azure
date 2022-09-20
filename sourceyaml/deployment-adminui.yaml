@@ -28,7 +28,7 @@ spec:
         image: {{ACR}}/adminui:latest
         env:
         - name: SICCARSERVICE
-          value: "{{TENANTSERVICE}}"
+          value: "{{TENANTISSUER}}"
         - name: APPPATH
           value: "{{APPPATH}}"
         resources:
