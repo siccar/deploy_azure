@@ -29,6 +29,8 @@ spec:
         env:
         - name: SICCARSERVICE
           value: "{{TENANTSERVICE}}"
+        - name: APPPATH
+          value: "{{APPPATH}}"
         resources:
           limits:
             memory: "128Mi"
