@@ -14,7 +14,7 @@ az acr login -n $Registry
 
 az acr import `
   --name $Registry `
-  --source siccardev.azurecr.io/action-service:latest `
+  --source action-service:latest `
   --image action-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -24,7 +24,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source siccardev.azurecr.io/adminui:latest `
+  --source adminui:latest `
   --image adminui:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -34,7 +34,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source siccardev.azurecr.io/blueprint-service:latest `
+  --source blueprint-service:latest `
   --image blueprint-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -44,7 +44,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --image siccardev.azurecr.io/wallet-service:latest `
+  --image wallet-service:latest `
   --source wallet-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -54,7 +54,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source siccardev.azurecr.io/register-service:latest `
+  --source register-service:latest `
   --image register-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -64,7 +64,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source siccardev.azurecr.io/peer-service:latest `
+  --source peer-service:latest `
   --image peer-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -74,7 +74,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source siccardev.azurecr.io/validator-service:latest `
+  --source validator-service:latest `
   --image validator-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -84,7 +84,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source siccardev.azurecr.io/tenant-service:latest `
+  --source tenant-service:latest `
   --image tenant-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
