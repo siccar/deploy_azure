@@ -84,7 +84,14 @@ spec:
               service:
                 name: peer-service
                 port:
-                  number: 80            
+                  number: 80
+          - path: /admin
+            pathType: Exact
+            backend:
+              service:
+                name: adminui
+                port:
+                  number: 80          
           - path: /
             pathType: Prefix  
             backend:
