@@ -5,7 +5,8 @@
 param (
     [Parameter(Mandatory=$true, HelpMessage="Azure AD Tenant ID")] [string] $azadtenantid='guid',
     [Parameter(Mandatory=$true, HelpMessage="Azure Application Client ID")] [string] $azadclientid='guid',
-    [Parameter(Mandatory=$true, HelpMessage="Administrators Email Address")] [string] $adminemail='admin@email.com'
+    [Parameter(Mandatory=$true, HelpMessage="Administrators Email Address")] [string] $adminemail='admin@email.com',
+    [Parameter(Mandatory=$true, HelpMessage="installation name")] [string] $tenantissuer='n0.siccar.dev'
     )
 
 #
@@ -18,6 +19,7 @@ Write-Host "We now need to configure the initial Tenant and Client"
 (Get-Content ./sourceyaml/initial-clients.json) | `
     ForEach-Object { $_.replace("{{APPTENANTID}}", "$azadtenantid").
         replace("{{APPCLIENTID}}", "$azadclientid").
+        replace("{{TENANTISSUER}}", "$tenantissuer").
         replace("{{EMAILID}}","$adminemail") `
     } | `
     Out-File ./components/tenant_boot.json

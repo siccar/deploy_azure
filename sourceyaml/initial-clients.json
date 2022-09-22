@@ -25,19 +25,14 @@
           "client_credentials"
         ],
         "RedirectUris": [
-          "https://localhost:6004/authentication/login-callback",
-          "https://localhost:5101/authentication/login-callback",
-          "http://localhost:6004"
+          "https://{{TENANTISSUER}}/admin/authentication/login-callback"
         ],
         "PostLogoutRedirectUris": [
-          "https://localhost:6004/signout-callback-oidc",
-          "https://localhost:5101/authentication/logout-callback"
+          "https://{{TENANTISSUER}}/admin/signout-callback-oidc"
         ],
         "AllowOfflineAccess": true,
         "AllowedCorsOrigins": [
-          "https://localhost:6004",
-          "https://localhost:5101",
-          "http://localhost:6004"
+          "https://{{TENANTISSUER}}"
         ],
         "AllowedScopes": [
           "openid",
