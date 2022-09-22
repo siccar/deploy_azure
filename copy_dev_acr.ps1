@@ -30,7 +30,7 @@ az acr import `
   --password $AcrPAT `
   --force `
   --registry /subscriptions/63a27db5-9ba5-4d6b-b534-1f6b60b5c1ca/resourceGroups/siccarv3-dev/providers/Microsoft.ContainerRegistry/registries/siccardev
-"Imported Action-Service"
+"Imported AdminUI"
 
 az acr import `
   --name $Registry `
