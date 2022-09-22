@@ -30,7 +30,7 @@ spec:
         - name: SICCARSERVICE
           value: "{{TENANTISSUER}}"
         - name: APPPATH
-          value: "{{APPPATH}}"
+          value: "/admin/"
         resources:
           limits:
             memory: "128Mi"

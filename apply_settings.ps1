@@ -17,6 +17,13 @@ Write-Host "Generating Deployment YAML for "$issuer
     } | `
     Out-File ./deployments/deployment-microservice-action.yaml
 
+# AdminUI 
+(Get-Content ./sourceyaml/deployment-adminui.yaml) | `
+ForEach-Object { $_.replace("{{ACR}}", "$acrName.azurecr.io").
+    replace("{{TENANTISSUER}}", "$issuer") `
+} | `
+Out-File ./deployments/deployment-adminui.yaml
+
 # BlueprintService 
 (Get-Content ./sourceyaml/deployment-microservice-blueprint.yaml) | `
     ForEach-Object { $_.replace("{{ACR}}", "$acrName.azurecr.io").
