@@ -76,7 +76,7 @@ spec:
             pathType: Exact
             backend:
               service:
-                name: action-service
+                name: register-service
                 port:
                   number: 80
           - path: /api/peer
