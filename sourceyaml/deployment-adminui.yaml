@@ -32,7 +32,7 @@ spec:
         - name: APPPATH
           value: "/admin/"
         resources:
-          request:
+          requests:
             memory: "64Mi"
             cpu: "100m" 
           limits:
