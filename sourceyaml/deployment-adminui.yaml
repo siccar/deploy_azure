@@ -32,9 +32,12 @@ spec:
         - name: APPPATH
           value: "/admin/"
         resources:
+          request:
+            memory: "64Mi"
+            cpu: "100m" 
           limits:
             memory: "128Mi"
-            cpu: "500m"          
+            cpu: "250m"          
         ports:
         - containerPort: 80
         imagePullPolicy: Always

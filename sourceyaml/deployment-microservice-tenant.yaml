@@ -60,6 +60,9 @@ spec:
               name: daprsecret
               key: secret
         resources:
+          request:
+            memory: "64Mi"
+            cpu: "100m" 
           limits:
             memory: "256Mi"
             cpu: "250m"  
