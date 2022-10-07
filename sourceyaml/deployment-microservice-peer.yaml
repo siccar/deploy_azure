@@ -41,6 +41,8 @@ spec:
           value: "{{SERILOG__MINIMUMLEVEL}}"
         - name: ASPNETCORE_FORWARDEDHEADERS_ENABLED
           value: "true"
+        - name: TENANTISSUER
+          value: {{TENANTISSUER}}
         - name: APP__API__TOKEN
           valueFrom:
             secretKeyRef:
