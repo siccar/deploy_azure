@@ -14,6 +14,15 @@ $bin = az storage account create -n $AKS_PERS_STORAGE_ACCOUNT_NAME -g $env:Resou
 # Export the connection string as an environment variable, this is used when creating the Azure file share
 $AZURE_STORAGE_CONNECTION_STRING=$(az storage account show-connection-string -n $AKS_PERS_STORAGE_ACCOUNT_NAME -g $env:ResourceGroup -o tsv)
 
+# Create wallet service container for the storage account
+Write-Host "Creating wallet-service container in storage account"
+$bin = az storage container create -n wallet-service --account-name $AKS_PERS_STORAGE_ACCOUNT_NAME --connection-string $AZURE_STORAGE_CONNECTION_STRING
+
+# Generate Secure Access Token for service account
+Write-Host "Generating shared access signature for storage account"
+$SHARED_ACCESS_SIGNATURE=$(az storage container generate-sas --connection-string $AZURE_STORAGE_CONNECTION_STRING --account-name miketestsiccardevsa --name wallet-service --permissions rwdlac --expiry ((Get-Date).AddYears(1) | Get-Date -Format "yyyy-MM-dd"))
+$env:SHARED_ACCESS_SIGNATURE_CONNECTION_STRING="BlobEndpoint=https://" + $AKS_PERS_STORAGE_ACCOUNT_NAME + ".blob.core.windows.net/;SharedAccessSignature=" + $SHARED_ACCESS_SIGNATURE.replace('"',"")
+
 # Create the file share
 $bin = az storage share create -n $AKS_PERS_SHARE_NAME --connection-string $AZURE_STORAGE_CONNECTION_STRING
 $STORAGE_KEY=$(az storage account keys list --resource-group $env:ResourceGroup --account-name $AKS_PERS_STORAGE_ACCOUNT_NAME --query "[0].value" -o tsv)

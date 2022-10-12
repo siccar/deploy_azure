@@ -32,10 +32,12 @@ kubectl delete secret local-secret-store --ignore-not-found
 #  KeyVault Client Secret String - When the App ID is created you can created and access secret
 #  KeyVault Tenant Id String - the GUID for the tenant Active Directory
 #  Wallet Encryption Key - string - can be used to preseed cryptokeys for reliable testing
+#  Wallet Shared Access Signature - string - Used for connecting to store keys as blobs in Azure storage
 
 kubectl create secret generic local-secret-store `
 --from-literal=keyVaultConnectionString=$kid `
 --from-literal=siccarV3ClientId=$siccarV3ClientId `
 --from-literal=siccarV3ClientSecret=$siccarV3ClientSecret `
 --from-literal=siccarV3ClientTenant=$siccarV3ClientTenant `
---from-literal=walletEncryptionKey=in_key_vault
+--from-literal=walletEncryptionKey=in_key_vault `
+--from-literal=walletSharedAccessSignature=$env:SHARED_ACCESS_SIGNATURE_CONNECTION_STRING
