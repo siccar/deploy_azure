@@ -20,7 +20,7 @@ $bin = az storage container create -n wallet-service --account-name $AKS_PERS_ST
 
 # Generate Secure Access Token for service account
 Write-Host "Generating shared access signature for storage account"
-$SHARED_ACCESS_SIGNATURE=$(az storage container generate-sas --connection-string $AZURE_STORAGE_CONNECTION_STRING --account-name miketestsiccardevsa --name wallet-service --permissions rwdlac --expiry ((Get-Date).AddYears(1) | Get-Date -Format "yyyy-MM-dd"))
+$SHARED_ACCESS_SIGNATURE=$(az storage container generate-sas --connection-string $AZURE_STORAGE_CONNECTION_STRING --account-name $AKS_PERS_STORAGE_ACCOUNT_NAME --name wallet-service --permissions rwdlac --expiry ((Get-Date).AddYears(1) | Get-Date -Format "yyyy-MM-dd"))
 $env:SHARED_ACCESS_SIGNATURE_CONNECTION_STRING="BlobEndpoint=https://" + $AKS_PERS_STORAGE_ACCOUNT_NAME + ".blob.core.windows.net/;SharedAccessSignature=" + $SHARED_ACCESS_SIGNATURE.replace('"',"")
 
 # Create the file share
