@@ -25,7 +25,8 @@
           "client_credentials"
         ],
         "RedirectUris": [
-          "https://{{TENANTISSUER}}/admin/authentication/login-callback"
+          "https://{{TENANTISSUER}}/admin/authentication/login-callback",
+          "https://localhost:6004"
         ],
         "PostLogoutRedirectUris": [
           "https://{{TENANTISSUER}}/admin/signout-callback-oidc"
@@ -38,8 +39,7 @@
           "openid",
           "profile",
           "api",
-          "wallet.read",
-          "wallet.update",
+          "wallet.user",
           "register.admin",
           "blueprint.publish",
           "wallet.admin",
