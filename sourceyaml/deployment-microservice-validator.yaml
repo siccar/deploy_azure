@@ -45,10 +45,10 @@ spec:
               key: secret
         resources:
           requests:
-            memory: "128Mi"
+            memory: "96Mi"
             cpu: "100m" 
           limits:
-            memory: "750Mi"
+            memory: "600Mi"
             cpu: "500m"          
         ports:
         - containerPort: 80

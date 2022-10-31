@@ -52,10 +52,10 @@ spec:
               key: repo
         resources:
           requests:
-            memory: "256Mi"
+            memory: "160Mi"
             cpu: "200m" 
           limits:
-            memory: "256Mi"
+            memory: "640Mi"
             cpu: "750m"
         ports:
         - containerPort: 80
