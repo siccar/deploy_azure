@@ -52,11 +52,11 @@ spec:
               key: repo
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "100m" 
+            memory: "256Mi"
+            cpu: "200m" 
           limits:
             memory: "256Mi"
-            cpu: "250m"
+            cpu: "750m"
         ports:
         - containerPort: 80
         imagePullPolicy: Always

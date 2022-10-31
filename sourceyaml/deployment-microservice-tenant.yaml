@@ -61,11 +61,11 @@ spec:
               key: secret
         resources:
           requests:
-            memory: "64Mi"
+            memory: "256Mi"
             cpu: "100m" 
           limits:
-            memory: "256Mi"
-            cpu: "250m"  
+            memory: "640Mi"
+            cpu: "500m"  
         volumeMounts:
           - name: keydata
             mountPath: "/app/data"
