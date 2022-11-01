@@ -58,6 +58,13 @@ spec:
                 name: wallet-service
                 port:
                   number: 80
+          - path: /api/pendingtransactions
+            pathType: Exact  
+            backend:
+              service:
+                name: wallet-service
+                port:
+                  number: 80
           - path: /api/registers
             pathType: Exact 
             backend:
