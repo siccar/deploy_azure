@@ -13,6 +13,7 @@ metadata:
     nginx.ingress.kubernetes.io/http2-max-header-size: "128k"
     nginx.ingress.kubernetes.io/large-client-header-bufferss: "8 64k"
     nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
+    nginx.ingress.kubernetes.io/client_max_body_size: "16m"
 spec:
   tls:
   - hosts:
@@ -29,77 +30,77 @@ spec:
               service:
                 name: action-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /actionshub
             pathType: Exact
             backend:
               service:
                 name: action-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /api/blueprints
             pathType: Exact
             backend:
               service:
                 name: blueprint-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /api/validator
             pathType: Exact
             backend:
               service:
                 name: validator-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /api/wallets
             pathType: Exact  
             backend:
               service:
                 name: wallet-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /api/pendingtransactions
             pathType: Exact  
             backend:
               service:
                 name: wallet-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /api/registers
             pathType: Exact 
             backend:
               service:
                 name: register-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /odata/registers
             pathType: Exact 
             backend:
               service:
                 name: register-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /registershub
             pathType: Exact
             backend:
               service:
                 name: register-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /api/peer
             pathType: Exact  
             backend:
               service:
                 name: peer-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /peerhub
             pathType: Exact
             backend:
               service:
                 name: peer-service
                 port:
-                  number: 80
+                  number: 8080
           - path: /admin
             pathType: Exact
             backend:
@@ -113,4 +114,4 @@ spec:
               service:
                 name: tenant-service
                 port:
-                  number: 80
+                  number: 8080

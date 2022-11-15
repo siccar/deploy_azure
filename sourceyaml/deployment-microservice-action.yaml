@@ -18,7 +18,7 @@ spec:
       annotations:
         dapr.io/enabled: "true"
         dapr.io/app-id: "action-service"
-        dapr.io/app-port: "80"
+        dapr.io/app-port: "8080"
         dapr.io/log-level: "info"
         dapr.io/app-token-secret: "app-api-token"
         dapr.io/sidecar-liveness-probe-period-seconds: "20"
