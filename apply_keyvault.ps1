@@ -25,6 +25,10 @@ $log = az keyvault set-policy -n $kvName --object-id $siccarV3ClientId --key-per
 
 $log = az aks enable-addons --addons azure-keyvault-secrets-provider --name $kvName --resource-group $env:ResourceGroup
 
+# set the service user to read
+kubectl create clusterrole secretreader --verb=get,list,watch --resource=secrets
+kubectl create clusterrolebinding secretreader-srvacct-default-binding --clusterrole=secretreader --serviceaccount=default:default
+
 kubectl delete secret local-secret-store --ignore-not-found
 # Paramaters:
 #  KeyVault Connection URL String - this is the 'kid' field when the actual Key Store is created in the Vault Service 
