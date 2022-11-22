@@ -19,3 +19,5 @@ spec:
     value: blueprintstore
   - name: collectionName
     value: DAPR
+scopes:
+- blueprint-service

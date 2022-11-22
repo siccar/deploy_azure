@@ -13,3 +13,5 @@ spec:
     value: "dapr"
   - name: tableName
     value: "blueprintstate"
+scopes:
+- blueprint-service

@@ -24,3 +24,5 @@ spec:
       key: database
   - name: collection
     value: blueprintstate
+scopes:
+- blueprint-service
