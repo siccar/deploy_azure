@@ -1,0 +1,21 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: blueprintstore
+  namespace: default
+spec:
+  type: state.mongodb
+  version: v1
+  metadata:
+  - name: server
+    value: "https://n1siccardev.mongo.cosmos.azure.com:443/"
+  - name: username
+    value: <fill-in>
+  - name: password
+    value: <fill-in>
+  - name: params
+    value: "?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@n1siccardev@"
+  - name: database
+    value: blueprintstore
+  - name: collectionName
+    value: DAPR

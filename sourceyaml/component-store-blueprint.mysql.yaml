@@ -1,0 +1,15 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: blueprintstore
+  namespace: default
+spec:
+  type: state.mysql
+  version: v1
+  metadata:
+  - name: connectionString
+    value: "<CONNECTION STRING>"
+  - name: schemaName
+    value: "dapr"
+  - name: tableName
+    value: "blueprintstate"
