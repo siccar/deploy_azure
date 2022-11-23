@@ -24,6 +24,8 @@ spec:
         dapr.io/sidecar-readiness-probe-period-seconds: "20"
         dapr.io/app-token-secret: "app-api-token"
         dapr.io/http-max-request-size: "16"
+        dapr.io/enable-app-health-check: "true"
+        dapr.io/app-health-check-path: "/api/registers/healthz"
     spec:
       containers:
       - name: register-service
