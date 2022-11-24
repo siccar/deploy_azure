@@ -17,6 +17,7 @@ spec:
         app: tenant-service
       annotations:
         dapr.io/enabled: "true"
+        dapr.io/config: featureconfig
         dapr.io/app-id: "tenant-service"
         dapr.io/app-port: "8080"
         dapr.io/log-level: "info"
