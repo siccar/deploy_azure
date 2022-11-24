@@ -17,3 +17,4 @@ kubectl create secret generic app-api-token --from-literal=token=$sharedJwt -n d
 kubectl create secret generic daprsecret --from-literal=secret=$sharedSecret -n default
 
 kubectl apply -f ./components/secret-reader-role.yaml
+kubectl apply -f ./components/dapr-feature-config.yaml

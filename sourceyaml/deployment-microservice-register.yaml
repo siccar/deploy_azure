@@ -26,6 +26,7 @@ spec:
         dapr.io/http-max-request-size: "16"
         dapr.io/enable-app-health-check: "true"
         dapr.io/app-health-check-path: "/api/registers/healthz"
+        dapr.io/config: featureconfig
     spec:
       containers:
       - name: register-service
