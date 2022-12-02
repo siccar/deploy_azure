@@ -115,3 +115,10 @@ spec:
                 name: tenant-service
                 port:
                   number: 8080
+          - path: /odata/participants 
+            pathType: Exact
+            backend:
+              service:
+                name: tenant-service
+                port:
+                  number: 8080
