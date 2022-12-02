@@ -1,0 +1,28 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: blueprintstore
+  namespace: default
+spec:
+  type: state.azure.cosmosdb
+  version: v1
+  metadata:
+  - name: url
+    valueFrom:
+      secretKeyRef:
+      name: cosmosstate
+      key: url  
+  - name: masterKey
+    valueFrom:
+      secretKeyRef:
+      name: cosmosstate
+      key: masterkey  
+  - name: database
+    valueFrom:
+      secretKeyRef:
+      name: cosmosstate
+      key: database
+  - name: collection
+    value: walletstate
+scopes:
+- wallet-service

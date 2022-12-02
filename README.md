@@ -157,6 +157,18 @@ Further ensure that Key Vault has enabled access to (Check boxes ticked)
 * Azure Virtual Machines for Deployment
 * Azure Disk Encryption for Volume encryption
 
+#### State Stores
+
+DAPR Uses component configurtion to plugin various service provides such as the Pub Sub and State. Several services have state stores. The Default is to use the MongoDB database, this hoever requires you create the following via the Web UI
+
+     New Database _DAPR_
+     New Collections in db _blueprintstore_
+                           _registerstore_
+                           _walletstore_
+
+The MongoDB Connectionstring current needs to added manually;
+
+
 #### Ensure configuration of the MySQL store
 
 Setting the wallet service SQL store. Get the connection string from the Azure portal but is in the form:

@@ -17,3 +17,5 @@ spec:
     value: "#{COSMOS_DATABASE}#"
   - name: collection
     value: walletstate
+scopes:
+- wallet-service
