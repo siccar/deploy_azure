@@ -8,4 +8,6 @@ spec:
   version: v1
   metadata:
   - name: connectionString
-    value: {{pubsubconnection}}
+    secretKeyRef:
+      name: "pubsubsecret"
+      key: "connectionstring"
