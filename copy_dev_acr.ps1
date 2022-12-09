@@ -6,7 +6,8 @@
 param (
     [Parameter(Mandatory=$true, Position=0, HelpMessage="Local Registry Name")] [string] $Registry ,
     [Parameter(Mandatory=$true, Position=1, HelpMessage="Source ACR User")] [string] $AcrUsr ,
-    [Parameter(Mandatory=$true, Position=2, HelpMessage="Source ACR Personal Access Token")] [string] $AcrPAT
+    [Parameter(Mandatory=$true, Position=2, HelpMessage="Source ACR Personal Access Token")] [string] $AcrPAT,
+    [Parameter(Mandatory=$false, Position=3, HelpMessage="release or latest")] [string] $build = "release"
 )
 
 # default repo user is  d202cc08-06a1-418f-9041-d7d201aff4a3  - install@siccar.net
@@ -14,7 +15,7 @@ az acr login -n $Registry
 
 az acr import `
   --name $Registry `
-  --source action-service:latest `
+  --source action-service:$build `
   --image action-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -24,7 +25,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source adminui:latest `
+  --source adminui:$build `
   --image adminui:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -34,7 +35,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source blueprint-service:latest `
+  --source blueprint-service:$build `
   --image blueprint-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -44,7 +45,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --image wallet-service:latest `
+  --image wallet-service:$build `
   --source wallet-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -54,7 +55,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source register-service:latest `
+  --source register-service:$build `
   --image register-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -64,7 +65,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source peer-service:latest `
+  --source peer-service:$build `
   --image peer-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -74,7 +75,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source validator-service:latest `
+  --source validator-service:$build `
   --image validator-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
@@ -84,7 +85,7 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --source tenant-service:latest `
+  --source tenant-service:$build `
   --image tenant-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
