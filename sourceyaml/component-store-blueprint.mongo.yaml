@@ -7,14 +7,18 @@ spec:
   type: state.mongodb
   version: v1
   metadata:
-  - name: server
-    value: "https://n1siccardev.mongo.cosmos.azure.com:443/"
+  - name: host
+    value: "[n]siccardev.mongo.cosmos.azure.com:10255"
   - name: username
-    value: <fill-in>
+    secretKeyRef:
+      name: statestore
+      key: username
   - name: password
-    value: <fill-in>
+    secretKeyRef:
+      name: statestore
+      key: token
   - name: params
-    value: "?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@n1siccardev@"
+    value: "?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@[n]siccardev@"
   - name: database
     value: blueprintstore
   - name: collectionName
