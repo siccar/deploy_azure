@@ -26,6 +26,7 @@ spec:
         dapr.io/http-max-request-size: "16"
         dapr.io/enable-app-health-check: "true"
         dapr.io/app-health-check-path: "/api/blueprints/healthz"
+        dapr.io/app-token-secret: "app-api-token"
     spec:
       containers:
       - name: blueprint-service
