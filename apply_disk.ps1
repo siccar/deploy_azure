@@ -18,10 +18,20 @@ $AZURE_STORAGE_CONNECTION_STRING=$(az storage account show-connection-string -n 
 Write-Host "Creating wallet-service container in storage account"
 $bin = az storage container create -n wallet-service --account-name $AKS_PERS_STORAGE_ACCOUNT_NAME --connection-string $AZURE_STORAGE_CONNECTION_STRING
 
+# Create tenant service container for the storage account
+Write-Host "Creating tenant-service container in storage account"
+$bin = az storage container create -n tenant-service --account-name $AKS_PERS_STORAGE_ACCOUNT_NAME --connection-string $AZURE_STORAGE_CONNECTION_STRING
+
 # Generate Secure Access Token for service account
-Write-Host "Generating shared access signature for storage account"
-$SHARED_ACCESS_SIGNATURE=$(az storage container generate-sas --connection-string $AZURE_STORAGE_CONNECTION_STRING --account-name $AKS_PERS_STORAGE_ACCOUNT_NAME --name wallet-service --permissions rwdlac --expiry ((Get-Date).AddYears(1) | Get-Date -Format "yyyy-MM-dd"))
-$env:SHARED_ACCESS_SIGNATURE_CONNECTION_STRING="BlobEndpoint=https://" + $AKS_PERS_STORAGE_ACCOUNT_NAME + ".blob.core.windows.net/;SharedAccessSignature=" + $SHARED_ACCESS_SIGNATURE.replace('"',"")
+Write-Host "Generating wallet-service shared access signature for storage account"
+$WALLET_SHARED_ACCESS_SIGNATURE=$(az storage container generate-sas --connection-string $AZURE_STORAGE_CONNECTION_STRING --account-name $AKS_PERS_STORAGE_ACCOUNT_NAME --name wallet-service --permissions rwdlac --expiry ((Get-Date).AddYears(1) | Get-Date -Format "yyyy-MM-dd"))
+$env:WALLET_SHARED_ACCESS_SIGNATURE_CONNECTION_STRING="BlobEndpoint=https://" + $AKS_PERS_STORAGE_ACCOUNT_NAME + ".blob.core.windows.net/;SharedAccessSignature=" + $WALLET_SHARED_ACCESS_SIGNATURE.replace('"',"")
+
+# Generate Secure Access Token for service account
+Write-Host "Generating tenant-service shared access signature for storage account"
+$TENANT_SHARED_ACCESS_SIGNATURE=$(az storage container generate-sas --connection-string $AZURE_STORAGE_CONNECTION_STRING --account-name $AKS_PERS_STORAGE_ACCOUNT_NAME --name tenant-service --permissions rwdlac --expiry ((Get-Date).AddYears(1) | Get-Date -Format "yyyy-MM-dd"))
+$env:TENANT_SHARED_ACCESS_SIGNATURE_CONNECTION_STRING="BlobEndpoint=https://" + $AKS_PERS_STORAGE_ACCOUNT_NAME + ".blob.core.windows.net/;SharedAccessSignature=" + $TENANT_SHARED_ACCESS_SIGNATURE.replace('"',"")
+
 
 # Create the file share
 $bin = az storage share create -n $AKS_PERS_SHARE_NAME --connection-string $AZURE_STORAGE_CONNECTION_STRING
