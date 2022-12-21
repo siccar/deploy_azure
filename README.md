@@ -21,7 +21,7 @@ and lastly install or restore the siccarcmd dotnet tool
 
      dotnet tool install siccarcmd
 
-IMPORTANAT NOTES:
+IMPORTANT NOTES:
 
 * This is an early release some scripts can still be a bit brittle!
 * while the tooling runs across all platforms the DAPR installation tool cannot be used from Cloud Shell therefore do not perform the installation from Cloud Shell
@@ -182,11 +182,19 @@ The Databasename is important!
 
 ### Step 6
 
+Configure the telemetry, this will deploy an open telemetry collector used by Dapr.
+
+Pass in a single argument, which is your Intrumentation Key from Azure Application Insights.
+
+     ./apply_intrumentation.ps1 instrumentation_key
+
+### Step 7
+
 Start the services
 
      ./start_services.ps1
 
-### Step 7
+### Step 8
 
 At this point we should have a running, if not fully configured installation.
 
@@ -203,7 +211,7 @@ The following kubernetes secrets should be in place (kubectl get secrets)
 * tenantrepository : connection string to tenant repository
 * walletrepository : connection string to wallet SQL repository
 
-### Step 8
+### Step 9
 
 Now fixup the Tenant-Service, we need to seed the Database with a default tenant and copy the SSL Certificate into the Tenant Service, you need to ensure teh DNS and routing is working - which it should be, test by hitting <https://{{dns_name}}> and you should be returned 'ok'
 

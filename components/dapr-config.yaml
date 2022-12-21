@@ -6,3 +6,7 @@ spec:
   features:
     - name: AppHealthCheck
       enabled: true
+  tracing:
+  samplingRate: "1"
+  zipkin:
+    endpointAddress: http://otel-collector.default.svc.cluster.local:9411/api/v2/spans
