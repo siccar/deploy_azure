@@ -77,11 +77,11 @@ spec:
           - "--config=/conf/otel-collector-config.yaml"
         resources:
           limits:
-            cpu: 1
-            memory: 2Gi
+            cpu: 100m
+            memory: 256Mi
           requests:
-            cpu: 200m
-            memory: 400Mi
+            cpu: 50m
+            memory: 128Mi
         ports:
           - containerPort: 9411 # Default endpoint for Zipkin receiver.
         volumeMounts:
