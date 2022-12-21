@@ -45,8 +45,8 @@ az acr import `
 
 az acr import `
   --name $Registry `
-  --image wallet-service:$build `
-  --source wallet-service:latest `
+  --source wallet-service:$build `
+  --image wallet-service:latest `
   --username $AcrUsr `
   --password $AcrPAT `
   --force `
