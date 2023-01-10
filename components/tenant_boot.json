@@ -26,18 +26,16 @@
           "client_credentials"
         ],
         "RedirectUris": [
-          "https://localhost:6004/authentication/login-callback",
-          "https://localhost:5101/authentication/login-callback",
+          "https://localhost:6004/admin/authentication/login-callback",
           "http://localhost:6004"
         ],
         "PostLogoutRedirectUris": [
           "https://localhost:6004/signout-callback-oidc",
-          "https://localhost:5101/authentication/logout-callback"
+          "https://localhost:6004/authentication/logout-callback"
         ],
         "AllowOfflineAccess": true,
         "AllowedCorsOrigins": [
           "https://localhost:6004",
-          "https://localhost:5101",
           "http://localhost:6004"
         ],
         "AllowedScopes": [
