@@ -31,6 +31,13 @@ spec:
                 name: action-service
                 port:
                   number: 8080
+          - path: /odata/actions
+            pathType: Exact 
+            backend:
+              service:
+                name: action-service
+                port:
+                  number: 8080
           - path: /actionshub
             pathType: Exact
             backend:
@@ -45,6 +52,13 @@ spec:
                 name: blueprint-service
                 port:
                   number: 8080
+          - path: /odata/blueprints
+            pathType: Exact
+            backend:
+              service:
+                name: blueprint-service
+                port:
+                  number: 8080
           - path: /api/validator
             pathType: Exact
             backend:
@@ -53,6 +67,13 @@ spec:
                 port:
                   number: 8080
           - path: /api/wallets
+            pathType: Exact  
+            backend:
+              service:
+                name: wallet-service
+                port:
+                  number: 8080
+          - path: /odata/wallets
             pathType: Exact  
             backend:
               service:
@@ -116,6 +137,13 @@ spec:
                 port:
                   number: 8080
           - path: /odata/participants 
+            pathType: Exact
+            backend:
+              service:
+                name: tenant-service
+                port:
+                  number: 8080
+          - path: /odata/tenants 
             pathType: Exact
             backend:
               service:
