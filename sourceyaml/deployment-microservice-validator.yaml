@@ -37,6 +37,8 @@ spec:
         env:
         - name: SERILOG__MINIMUMLEVEL
           value: {{SERILOG__MINIMUMLEVEL}}
+        - name: TENANTISSUER
+          value: {{TENANTISSUER}}
         - name: APP__API__TOKEN
           valueFrom:
             secretKeyRef:
