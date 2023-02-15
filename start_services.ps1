@@ -5,4 +5,5 @@ kubectl apply -f ./deployments/deployment-microservice-register.yaml
 kubectl apply -f ./deployments/deployment-microservice-validator.yaml
 kubectl apply -f ./deployments/deployment-microservice-peer.yaml
 kubectl apply -f ./deployments/deployment-microservice-tenant.yaml
+kubectl apply -f ./deployments/deployment-adminui.yaml
 kubectl get pods

@@ -14,6 +14,18 @@ kubectl delete secret tenantrepository --ignore-not-found
 kubectl create secret generic registerrepository --from-literal=repo=$MongoDBConnectionString -n default
 kubectl create secret generic tenantrepository --from-literal=repo=$MongoDBConnectionString -n default
 
+$hostDomain = $MongoDBConnectionString.split("@")[1].split("/")[0]
+$username = $hostDomain.split(".")[0]
+$split = $MongoDBConnectionString.split(":")
+$key = $split[2].split("@")[0]
+$params = $split[3].split("/")[1]
+kubectl delete secret blueprintstore --ignore-not-found
+kubectl create secret generic blueprintstore --from-literal=hostDomain=$hostDomain -n default
+kubectl create secret generic blueprintstore --from-literal=username=$username -n default
+kubectl create secret generic blueprintstore --from-literal=key=$key -n default
+kubectl create secret generic blueprintstore --from-literal=params=$params -n default
+
+
 kubectl apply -f ./components/secret-wallet-kube.yaml
 
 "Create and Initialize MySQL Connection Secret"

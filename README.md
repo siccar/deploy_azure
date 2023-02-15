@@ -27,7 +27,9 @@ IMPORTANT NOTES:
 * while the tooling runs across all platforms the DAPR installation tool cannot be used from Cloud Shell therefore do not perform the installation from Cloud Shell
 * The scripts in part use environment variables for certain settings, these can be reset with ./set_installation.ps1
 * Try to complete the commisioning in a single shell environment
+* If you are creating the rescources in a new subscription you will need to increase the VM quotas in the location your planning to deploy to.
 
+* If it's a new subscription you may also need run into a missing subscription registration error, see here for fix https://code.kx.com/insights/1.1/microsoft-partnership/installing-kx-insights-platform-on-azure.html#missing-subscription-registration-error
 ## Steps
 
 Documentation and tooling to deploy a Siccar installation on Microsoft Azure.
@@ -152,7 +154,7 @@ Configure the Azure Key Vault Service for Wallet Protection, first you must run 
 * list Secret
 * set Secret
 
-Further ensure that Key Vault has enabled access to (Check boxes ticked)
+Further ensure that Key Vault has enabled access to (Check boxes ticked) in AccessConfiguration
 
 * Azure Virtual Machines for Deployment
 * Azure Disk Encryption for Volume encryption
