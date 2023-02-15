@@ -8,17 +8,21 @@ spec:
   version: v1
   metadata:
   - name: host
-    value: "[n]siccardev.mongo.cosmos.azure.com:10255"
+    secretKeyRef:
+      name: blueprintstore
+      key: hostDomain
   - name: username
     secretKeyRef:
-      name: statestore
+      name: blueprintstore
       key: username
   - name: password
     secretKeyRef:
-      name: statestore
-      key: token
+      name: blueprintstore
+      key: key
   - name: params
-    value: "?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@[n]siccardev@"
+    secretKeyRef:
+      name: blueprintstore
+      key: params
   - name: database
     value: blueprintstore
   - name: collectionName

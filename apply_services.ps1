@@ -1,5 +1,6 @@
 # Register the Microservices within Kubernetes
 "Registering Services"
+kubectl apply -f ./sourceyaml/component-store-blueprint.mongo.yaml
 kubectl apply -f ./components/dapr-config.yaml
 kubectl apply -f ./services/service-microservice-action.yaml
 kubectl apply -f ./services/service-adminui.yaml
