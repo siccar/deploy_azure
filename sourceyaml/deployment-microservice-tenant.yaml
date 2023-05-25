@@ -64,6 +64,11 @@ spec:
             secretKeyRef:
               name: daprsecret
               key: secret
+        - name: APPINSIGHTS__INSTRUMENTATIONKEY
+          valueFrom:
+            secretKeyRef:
+              key: intrumentationkey
+              name: appinsights
         resources:
           requests:
             memory: "160Mi"
