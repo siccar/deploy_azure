@@ -51,6 +51,11 @@ spec:
             secretKeyRef:
               key: intrumentationkey
               name: appinsights
+        - name: APPINSIGHTS__CONNECTIONSTRING
+          valueFrom:
+            secretKeyRef:
+              key: connectionstring
+              name: appinsights
         resources:
           requests:
             memory: "160Mi"
