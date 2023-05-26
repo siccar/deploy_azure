@@ -54,12 +54,12 @@ spec:
             secretKeyRef:
               name: walletrepository
               key: repo
-        - name: APPINSIGHTS__INSTRUMENTATIONKEY
+        - name: APPLICATIONINSIGHTS__INSTRUMENTATIONKEY
           valueFrom:
             secretKeyRef:
               key: intrumentationkey
               name: appinsights
-        - name: APPINSIGHTS__CONNECTIONSTRING
+        - name: APPLICATIONINSIGHTS__CONNECTIONSTRING
           valueFrom:
             secretKeyRef:
               key: connectionstring
