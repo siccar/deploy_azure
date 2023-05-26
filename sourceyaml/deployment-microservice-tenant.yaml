@@ -67,7 +67,7 @@ spec:
         - name: APPLICATIONINSIGHTS__INSTRUMENTATIONKEY
           valueFrom:
             secretKeyRef:
-              key: intrumentationkey
+              key: instrumentationkey
               name: appinsights
         - name: APPLICATIONINSIGHTS__CONNECTIONSTRING
           valueFrom:
