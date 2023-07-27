@@ -54,6 +54,16 @@ spec:
             secretKeyRef:
               name: walletrepository
               key: repo
+        - name: APPLICATIONINSIGHTS__INSTRUMENTATIONKEY
+          valueFrom:
+            secretKeyRef:
+              key: instrumentationkey
+              name: appinsights
+        - name: APPLICATIONINSIGHTS__CONNECTIONSTRING
+          valueFrom:
+            secretKeyRef:
+              key: connectionstring
+              name: appinsights
         resources:
           requests:
             memory: "160Mi"

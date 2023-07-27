@@ -25,6 +25,9 @@ kubectl create secret generic blueprintstore --from-literal=username=$username -
 kubectl create secret generic blueprintstore --from-literal=key=$key -n default
 kubectl create secret generic blueprintstore --from-literal=params=$params -n default
 
+#create an empty secret for appinsights - to prevent the system from not starting
+#this is reset latter in the instrumentation script
+kubectl create secret generic appinsights --from-literal=instrumentationkey=0
 
 kubectl apply -f ./components/secret-wallet-kube.yaml
 
